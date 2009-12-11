@@ -2,7 +2,7 @@ dependencies 0.0.7 git://github.com/djanowski/dependencies.git
 rack 1.0.0 git://github.com/rack/rack.git
 rack-test (test) git://github.com/brynary/rack-test.git
 sinatra 0.9.4 git://github.com/sinatra/sinatra.git
-haml 2.2.3 git://github.com/nex3/haml.git
+haml 2.2.15 git://github.com/nex3/haml.git
 extlib 0.9.13 git://github.com/datamapper/extlib.git
 oauth 0.3.6 git://github.com/mrflip/oauth.git
 monk-glue 0.0.1 git://github.com/monkrb/glue.git
