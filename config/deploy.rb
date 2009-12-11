@@ -28,17 +28,10 @@ namespace :deploy do
   end
 
   task :restart, :roles => [:web, :app] do
-    run "kill -USR2 \`cat #{deploy_to}/shared/tmp/unicorn.pid\` || true"
-    sleep 1
-    run "kill -QUIT \`cat #{deploy_to}/shared/tmp/unicorn.pid\` || true"
+    run(%Q{ if [ -f #{deploy_to}/shared/tmp/unicorn.pid ] ; } +
+      %Q{ then kill -USR2 \`cat #{deploy_to}/shared/tmp/unicorn.pid\` ; sleep 1 ; kill -QUIT \`cat #{deploy_to}/shared/tmp/unicorn.pid\` ; } +
+      %Q{ else cd #{deploy_to}/current && unicorn -D -c unicorn-conf.rb config.ru ; fi })
   end
-
-  # This will make sure that Capistrano doesn't try to run rake:migrate (this is not a Rails project!)
-  task :cold do
-    deploy.update
-    deploy.start
-  end
-
 
   task :after_symlink do
     run "ln -nfs #{deploy_to}/shared/system/settings.yml #{deploy_to}/current/config/settings.yml"
@@ -48,4 +41,9 @@ namespace :deploy do
     run "sudo gem install rack rack-test sinatra haml extlib monk-glue json unicorn god godhead"
   end
 
+  # This will make sure that Capistrano doesn't try to run rake:migrate (this is not a Rails project!)
+  task :cold do
+    deploy.update
+    deploy.start
+  end
 end
