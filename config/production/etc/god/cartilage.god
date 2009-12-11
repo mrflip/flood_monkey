@@ -1,7 +1,5 @@
-#!/usr/bin/env ruby
-# require 'rubygems'
-# require 'active_support'
 require 'godhead'
+CARTILAGE_DEPLOY_DIR = '/var/www/cartilage'
 
 # ===========================================================================
 #
@@ -9,19 +7,12 @@ require 'godhead'
 #
 group_options = { :monitor_group => :cartilage, }
 
-# Godhead::NginxRecipe.create group_options.merge({ })
-# replace with this one on OSX
-Godhead::NginxRunnerRecipe.create group_options.merge({ })
+# Use NginxRunnerRecipe on OSX
+Godhead::NginxRecipe.create group_options.merge({ })
+# Godhead::NginxRunnerRecipe.create group_options.merge({ })
 
-# (5000..5003).each do |port|
-#   Godhead::ThinRecipe.create(group_options.merge({
-#       :port        => port,
-#       :rackup_file => File.join(YUPFRONT_ROOT, 'config.ru'),
-#       :runner_conf => File.join(YUPFRONT_ROOT, 'production.yml') }))
-# end
-
-gg = Godhead::UnicornRecipe.create  group_options.merge({
-    :root_dir => '/slice/www/cartilage/current',
-    :pid_file => '/slice/www/cartilage/shared/tmp/unicorn.pid',
-    :uid => 'www'
+Godhead::UnicornRecipe.create     group_options.merge({
+    :root_dir => CARTILAGE_DEPLOY_DIR+'/current',
+    :pid_file => CARTILAGE_DEPLOY_DIR+'/shared/tmp/unicorn.pid',
+    :uid      => 'www-data'
   })
