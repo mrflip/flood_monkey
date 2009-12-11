@@ -1,0 +1,17 @@
+h1. FloodMonkey - Supervise your stream
+
+FloodMonkey helps manage subscriptions to the MySpace Flood, their real-time activity stream API.
+
+FloodMonkey is designed for people looking to capture firehose-level (100%) data streams.  We use it to haul in 25GB+ of raw data every day with a single small EC2 instance and room to spare.
+
+* A simple Sinatra frontend to manage and monitor subscriptions
+* Even yet still more lightweight scripts to handle publish callbacks as quickly and simply as possible, and stream them directly to disk.
+* Simple worker scripts to bundle the data and ship it to S3
+* Scripts to deploy, configure and monitor the various moving parts. 
+
+FloodMonkey is *not* designed for anything real-time. The endpoint streams everything to disk for late bulk processing -- we use "wukong":http://github.com/mrflip/wukong and "wuclan.":http://github.com/mrflip/wuclan
+
+h2. Credits
+
+* 
+* The frontend app is based on Monk / Cartilage, a skeleton for building Sinatra apps.
