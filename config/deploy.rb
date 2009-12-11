@@ -24,7 +24,7 @@ namespace :deploy do
   end
 
   task :stop, :roles => [:web, :app] do
-    run "kill -QUIT \`cat #{deploy_to}/shared/tmp/unicorn.pid\` || true"
+    run "kill \`cat #{deploy_to}/shared/tmp/unicorn.pid\` || true"
   end
 
   task :restart, :roles => [:web, :app] do
@@ -47,3 +47,20 @@ namespace :deploy do
     deploy.start
   end
 end
+
+
+# cap deploy               # Deploys your project.
+# cap deploy:check         # Test deployment dependencies.
+# cap deploy:cleanup       # Clean up old releases.
+# cap deploy:cold          # Deploys and starts a `cold' application.
+# cap deploy:pending       # Displays the commits since your last deploy.
+# cap deploy:pending:diff  # Displays the `diff' since your last deploy.
+# cap deploy:rollback      # Rolls back to a previous version and restarts.
+# cap deploy:rollback:code # Rolls back to the previously deployed version.
+# cap deploy:setup         # Prepares one or more servers for deployment.
+# cap deploy:symlink       # Updates the symlink to the most recently deployed ...
+# cap deploy:update        # Copies your project and updates the symlink.
+# cap deploy:update_code   # Copies your project to the remote servers.
+# cap deploy:upload        # Copy files to the currently deployed version.
+# cap invoke               # Invoke a single command on the remote servers.
+# cap shell                # Begin an interactive Capistrano session.
