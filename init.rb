@@ -1,4 +1,4 @@
-ROOT_DIR = File.expand_path(File.dirname(__FILE__)) unless defined? ROOT_DIR
+::ROOT_DIR = File.expand_path(File.dirname(__FILE__)) unless defined? ::ROOT_DIR
 # require "rubygems"
 
 begin

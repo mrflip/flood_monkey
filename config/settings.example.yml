@@ -1,5 +1,7 @@
 defaults: &defaults
+  :app_name:            monk_rock
   :domain:              foo.com
+  
  
 :development:
   :session_secret:      8d52a3f4dbb313f5634baf178cd6eca5fa6f841962a01040ca0a63098113b18ef3869f356220fb1c
