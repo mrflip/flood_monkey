@@ -19,7 +19,6 @@ class Monk < Thor
     DataMapper.auto_upgrade!
   end
 
-
   desc "test", "Run all the tests"
   def test
     verify "config/settings.example.yml"
@@ -49,7 +48,6 @@ class Monk < Thor
   end
 
 private
-
 
   def self.source_root
     File.dirname(__FILE__)
