@@ -33,6 +33,7 @@ a.out
 /db/*.sqlite3
 /config/database.yml
 /config/private.yml
+/config/settings.yml
 /config/sphinx.yml
 /public/stylesheets/compiled/*
 

@@ -1,17 +1,24 @@
 defaults: &defaults
+  :domain:              foo.com
  
 :development:
+  :session_secret:      8d52a3f4dbb313f5634baf178cd6eca5fa6f841962a01040ca0a63098113b18ef3869f356220fb1c
   :sqlite3:
     :adapter: sqlite3
     :database: db/development.sqlite3
     <<: *defaults
 
 :test:
+  :session_secret:     3850043ed66fdb0e14bc7bcd83318b5bb961107b58d335f2c30726924e5b46d4d5595b06ebb6eeb1
   :sqlite3:
+    :adapter: sqlite3
     :database: db/test.sqlite3
     <<: *defaults
 
 :production:
+  :session_secret:      8bf2b69bfba64fdb367aa815cc26f3de54dfc96a778ba4acf029ec1d416df64f15c44ada346770d5
   :sqlite3:
+    :adapter: sqlite3
     :database: db/production.sqlite3
     <<: *defaults
+
