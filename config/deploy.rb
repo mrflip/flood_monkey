@@ -24,7 +24,7 @@ namespace :deploy do
   end
 
   task :stop, :roles => [:web, :app] do
-    run "kill -QUIT \`cat #{deploy_to}/#{shared_dir}/tmp/unicorn.pid\`"
+    run "kill -QUIT \`cat #{deploy_to}/shared/tmp/unicorn.pid\`"
   end
 
   task :restart, :roles => [:web, :app] do
@@ -37,4 +37,9 @@ namespace :deploy do
     deploy.update
     deploy.start
   end
+
+  task :setup do
+    run "gem install unicorn god godhead"
+  end
+
 end
