@@ -20,16 +20,17 @@ role :endpoint,    domain
 
 namespace :deploy do
   task :start, :roles => [:web, :app] do
-    run "cd #{deploy_to}/current && unicorn -c unicorn-conf.rb config.ru"
+    run "cd #{deploy_to}/current && unicorn -D -c unicorn-conf.rb config.ru"
   end
 
   task :stop, :roles => [:web, :app] do
-    run "kill -QUIT \`cat #{deploy_to}/shared/tmp/unicorn.pid\`"
+    run "kill -QUIT \`cat #{deploy_to}/shared/tmp/unicorn.pid\` || true"
   end
 
   task :restart, :roles => [:web, :app] do
-    deploy.stop
-    deploy.start
+    run "kill -USR2 \`cat #{deploy_to}/shared/tmp/unicorn.pid\` || true"
+    sleep 1
+    run "kill -QUIT \`cat #{deploy_to}/shared/tmp/unicorn.pid\` || true"
   end
 
   # This will make sure that Capistrano doesn't try to run rake:migrate (this is not a Rails project!)
@@ -38,8 +39,13 @@ namespace :deploy do
     deploy.start
   end
 
-  task :setup do
-    run "gem install unicorn god godhead"
+
+  task :after_symlink do
+    run "ln -nfs #{deploy_to}/shared/system/settings.yml #{deploy_to}/current/config/settings.yml"
+  end
+
+  task :after_setup do
+    run "sudo gem install rack rack-test sinatra haml extlib monk-glue json unicorn god godhead"
   end
 
 end

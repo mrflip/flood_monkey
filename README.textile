@@ -42,7 +42,7 @@ Ruby Enterprise Edition
     sudo passwd deploy
 </pre>
 
-sudo gem install unicorn god godhead
-
+sudo gem install rack rack-test sinatra haml extlib monk-glue json unicorn god godhead haml 
 cap deploy:setup
 cap deploy:cold
+scp  config/settings.yml remotehost.com:/var/www/cartilage/shared/config/settings.yml

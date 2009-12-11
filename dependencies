@@ -7,10 +7,10 @@ extlib 0.9.13 git://github.com/datamapper/extlib.git
 oauth 0.3.6 git://github.com/mrflip/oauth.git
 monk-glue 0.0.1 git://github.com/monkrb/glue.git
 json 1.2.0 git://github.com/genki/json.git
+capistrano (development) git://github.com/mrflip/oauth.git
 unicorn (production) git://git.bogomips.org/unicorn.git
+god (production) git://github.com/mojombo/god.git
 godhead (production) git://github.com/mrflip/oauth.git
-capistrano git://github.com/mrflip/oauth.git
-god git://github.com/mojombo/god.git
 # dm-core 0.9.11 git://github.com/datamapper/dm-core.git
 # dm-more 0.9.11 git://github.com/datamapper/dm-more.git
 # do_sqlite3 0.9.12 git://github.com/datamapper/do.git
