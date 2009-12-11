@@ -1,18 +1,18 @@
 require 'godhead'
-CARTILAGE_DEPLOY_DIR = '/var/www/cartilage'
+FLOOD_MONKEY_DEPLOY_DIR = '/var/www/flood_monkey'
 
 # ===========================================================================
 #
-# Cartilage web app
+# Flood_Monkey web app
 #
-group_options = { :monitor_group => :cartilage, }
+group_options = { :monitor_group => :flood_monkey, }
 
 # Use NginxRunnerRecipe on OSX
 Godhead::NginxRecipe.create group_options.merge({ })
 # Godhead::NginxRunnerRecipe.create group_options.merge({ })
 
 Godhead::UnicornRecipe.create     group_options.merge({
-    :root_dir => CARTILAGE_DEPLOY_DIR+'/current',
-    :pid_file => CARTILAGE_DEPLOY_DIR+'/shared/tmp/unicorn.pid',
+    :root_dir => FLOOD_MONKEY_DEPLOY_DIR+'/current',
+    :pid_file => FLOOD_MONKEY_DEPLOY_DIR+'/shared/tmp/unicorn.pid',
     :uid      => 'www-data'
   })

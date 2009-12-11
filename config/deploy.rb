@@ -35,6 +35,10 @@ namespace :deploy do
 
   task :after_symlink do
     run "ln -nfs #{deploy_to}/shared/system/settings.yml #{deploy_to}/current/config/settings.yml"
+    %w[shared/log shared/tmp shared/pids].each do |dir|
+      dir_path = "#{deploy_to}/#{dir}"
+      sudo "mkdir -p #{dir_path} && chown #{runner}:admin #{dir_path}"
+    end
   end
 
   task :after_setup do

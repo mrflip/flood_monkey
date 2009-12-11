@@ -1,4 +1,4 @@
-ROOT_DIR = '/var/www/cartilage/shared'
+ROOT_DIR = '/var/www/flood_monkey/shared'
 FileUtils.mkdir_p  ROOT_DIR+'/tmp'
 FileUtils.mkdir_p  ROOT_DIR+'/log'
 
