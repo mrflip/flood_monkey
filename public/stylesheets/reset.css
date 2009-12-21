@@ -1,0 +1,67 @@
+/*****************************************************************************/
+/*
+/* Facebook-ish
+/*
+/*   http://devtacular.com/articles/bkonrad/how-to-style-an-application-like-facebook/
+/*
+/*****************************************************************************/
+
+/* Global Reset */
+
+*               { margin: 0; padding: 0; }
+body {
+  color:                #333 ;
+  background-color:     white ;
+  font-family:          'lucida grande', tahoma, verdana, arial, sans-serif;
+  font-size:            11px;
+  text-align:           left; direction: ltr; unicode-bidi: embed;
+     }
+
+.clear          { clear: both; height: 0; overflow: hidden; display: block; }
+table           { font-size: inherit; font: 100%; }
+hr              { border: 0; width: 80%; border-bottom: 1px solid #aaa }
+
+h1, h2, h3      { margin-top: 1em;  clear: both; }
+h4, h5, h6      { margin-top: 1em;  clear: both; }
+p               { margin: 1em   0 0.25em 0 ;                             line-height: 1.25; }
+h1              { margin: 1.0em 0 1.0em  0 ; padding: 0.5em 0 0.25em 0 ; border: 1px solid #ddd ; border-width: 0 0 1px 0 ; }
+h2              { margin: 1.5em 0 1.0em  0 ; padding: 0     0 0.25em 0 ; border: 1px solid #aaa ; border-width: 0 0 1px 0 ; text-align: left }
+blockquote      { margin-left:  1.25em ; margin-right: 1.25em ;     }
+
+a.fb            {  outline-style: none; font-size: 11px; font-weight: bold; }
+a               { color: #3b5998;       text-decoration:none         }
+a:visited       { color: #629;          }
+a:hover         { color: #429;          text-decoration:underline    }
+a:active        { color: #924;          }
+h1 a,h2 a,h3 a  { color: #118;          text-decoration: none;  }
+h1 a:visited,h2 a:visited,h3 a:visited  { color: #118; }
+
+h1              { font-size: 175%;        text-align: center }
+h2              { font-size: 150%;        }
+h3              { font-size: 115%;        }
+h4, h5, h6      { font-size: 100%;        }
+.small          { font-size: 75%;         }
+
+
+
+/*****************************************************************************/
+/*
+/* Text
+/*
+/*****************************************************************************/
+
+ul,      ol       { padding:     0.75em 0   0.5em  1.25em  ; }
+ul,      ol       { margin:      0.5em  0   1.0em  0       ; }
+li > ul, li > ol  { margin-top:  0.25em ; }
+li                { margin: 0 0 0.25em 0.75em ; line-height: 1.25; }
+blockquote        { color:        #444; }
+pre               { line-height: 1.33em;  }
+pre               { margin: 0.4em 0 1.25em 0 ; padding: 0.5em 1.0em ; font-size: 85%;   }
+code              {                            padding: 0     0.25em; font-size: 85%;  }
+pre code          {                            padding: 0 ;           font-size: 100%;  }
+pre               { color: #222;     border: 1px solid #ddd;  background-color: #eef; }
+code              {                  border: 1px solid #ddd;  background-color: #eef; }
+pre.terminal      { color: white;    border: 1px solid black; }
+pre code          {                  border: none;            background-color: inherit; }
+pre.terminal,
+pre.terminal code {                                           background-color: #333; }
