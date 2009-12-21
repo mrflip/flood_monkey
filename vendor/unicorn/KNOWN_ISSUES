@@ -1,0 +1,43 @@
+= Known Issues
+
+Occasionally odd {issues}[link:ISSUES.html] arise without a transparent or
+acceptable solution.  Those issues are documented here.
+
+* Rails 2.3.2 bundles its own version of Rack.  This may cause subtle
+  bugs when simultaneously loaded with the system-wide Rack Rubygem
+  which Unicorn depends on.  Upgrading to Rails 2.3.4 (or later) is
+  strongly recommended for all Rails 2.3.x users for this (and security
+  reasons).  Rails 2.2.x series (or before) did not bundle Rack and are
+  should be unnaffected.  If there is any reason which forces your
+  application to use Rails 2.3.2 and you have no other choice, then
+  you may edit your Unicorn gemspec and remove the Rack dependency.
+
+  ref: http://mid.gmane.org/20091014221552.GA30624@dcvr.yhbt.net
+  Note: the workaround described in the article above only made
+  the issue more subtle and we didn't notice them immediately.
+
+* Installing "unicorn" as a system-wide Rubygem and using the
+  {isolate}[http://github.com/jbarnette/isolate] gem may cause issues if
+  you're using any of the bundled application-level libraries in
+  unicorn/app/* (for compatibility with CGI-based applications, Rails <=
+  2.2.2, or ExecCgi).  For now workarounds include:
+
+  * installing the same version of unicorn as a system-wide Rubygem
+    _and_ isolating unicorn as well.
+  * explicitly setting RUBYLIB or $LOAD_PATH to include any gem path
+    where the unicorn gem is installed (e.g.
+    /usr/lib/ruby/gems/1.8/gems/unicorn-VERSION/lib)
+
+* WONTFIX: code reloading and restarts with Sinatra 0.3.x (and likely older
+  versions) apps is broken.  The workaround is to force production
+  mode to disable code reloading as well as disabling "run" in your
+  Sinatra application:
+    set :env, :production
+    set :run, false
+  Since this is no longer an issue with Sinatra 0.9.x apps, this will not be
+  fixed on our end.  Since Unicorn is itself the application launcher, the
+  at_exit handler used in old Sinatra always caused Mongrel to be launched
+  whenever a Unicorn worker was about to exit.
+
+  Also remember we're capable of replacing the running binary without dropping
+  any connections regardless of framework :)

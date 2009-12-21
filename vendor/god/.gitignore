@@ -1,0 +1,8 @@
+coverage
+pkg
+*.log
+logs
+*.rbc
+*~
+.*.sw?
+.DS_Store

@@ -1,0 +1,135 @@
+Subject: [ANN] god 0.6.0 released (and mailing list)
+
+!!!NEW MAILING LIST!!! We now have a mailing list at http://groups.google.com/group/god-rb
+
+This release is primarily focused on increased stability, robustness, and code cleanliness.
+
+The last release (0.5.0) switched from TCP sockets to Unix Domain Sockets for the CLI tools. There were some issues regarding file descriptors that would cause god to hang when restarting (the unix socket was being held open by spawned processes). These problems are all fixed in 0.6.0. You may need to kill any processes that were started under god 0.5.0 when you upgrade to 0.6.0 (you will only need to do this once during the upgrade process).
+
+More attention is now paid to Syslogging behavior.
+
+God will delete its own PID file when terminated via a user request.
+
+A new command line option now allows you to check whether your installation properly handles events (sometimes the C extension will compile ok, but still not support events. Gentoo, I'm looking at you). Run `god check` to see an attempt to use the event system. It will tell you if your installation does not support events.
+
+A watch can now be removed entirely at runtime using `god remove <watch name>`.
+
+A new condition DiskUsage allows you to check the available disk space on a given volume.
+
+Updated documentation is now available on the website:
+
+  http://god.rubyforge.org/
+
+
+WHAT IS GOD?
+
+God is an easy to configure, easy to extend monitoring framework written in Ruby.
+
+Keeping your server processes and tasks running should be a simple part of your deployment process. God aims to be the simplest, most powerful monitoring application available.
+
+
+DISCLAIMER
+
+God is still beta so I do not yet recommend you use it for mission critical tasks. We are using it at Powerset, Inc. to monitor our public facing applications, but then, we're daring fellows.
+
+
+INSTALL
+
+sudo gem install god
+
+
+FEATURES
+
+* Config file is written in Ruby
+* Easily write your own custom conditions in Ruby
+* Supports both poll and event based conditions
+* Different poll conditions can have different intervals
+* Easily control non-daemonized processes
+
+
+EXAMPLE
+
+The easiest way to understand how god will make your life better is by looking at a sample config file. The following configuration file is what I use at gravatar.com to keep the mongrels running:
+
+# run with:  god -c /path/to/gravatar.god
+# 
+# This is the actual config file used to keep the mongrels of
+# gravatar.com running.
+
+RAILS_ROOT = "/Users/tom/dev/gravatar2"
+
+%w{8200 8201 8202}.each do |port|
+  God.watch do |w|
+    w.name = "gravatar2-mongrel-#{port}"
+    w.interval = 30.seconds # default      
+    w.start = "mongrel_rails start -c #{RAILS_ROOT} -p #{port} \
+      -P #{RAILS_ROOT}/log/mongrel.#{port}.pid  -d"
+    w.stop = "mongrel_rails stop -P #{RAILS_ROOT}/log/mongrel.#{port}.pid"
+    w.restart = "mongrel_rails restart -P #{RAILS_ROOT}/log/mongrel.#{port}.pid"
+    w.start_grace = 10.seconds
+    w.restart_grace = 10.seconds
+    w.pid_file = File.join(RAILS_ROOT, "log/mongrel.#{port}.pid")
+    
+    w.behavior(:clean_pid_file)
+
+    w.start_if do |start|
+      start.condition(:process_running) do |c|
+        c.interval = 5.seconds
+        c.running = false
+      end
+    end
+    
+    w.restart_if do |restart|
+      restart.condition(:memory_usage) do |c|
+        c.above = 150.megabytes
+        c.times = [3, 5] # 3 out of 5 intervals
+      end
+    
+      restart.condition(:cpu_usage) do |c|
+        c.above = 50.percent
+        c.times = 5
+      end
+    end
+    
+    # lifecycle
+    w.lifecycle do |on|
+      on.condition(:flapping) do |c|
+        c.to_state = [:start, :restart]
+        c.times = 5
+        c.within = 5.minute
+        c.transition = :unmonitored
+        c.retry_in = 10.minutes
+        c.retry_times = 5
+        c.retry_within = 2.hours
+      end
+    end
+  end
+end
+
+
+DOCS
+
+Detailed documentation is available at http://god.rubyforge.org/
+
+
+CHANGES
+
+== 0.6.0 / 2007-12-4
+
+* Minor Enhancement
+  * Move Syslog calls into God::Logger and clean up all calling code
+  * Remove god's pid file on user requested termination
+  * Better handling and cleanup of DRb server's unix domain socket
+  * Allow shorthand for requesting a god log
+  * Add `god check` to make it easier to diagnose event problems
+  * Refactor god binary into class/method structure
+  * Implement `god remove` to remove a Task altogether
+* New Conditions
+  * DiskUsage < PollCondition - trigger if disk usage is above limit on mount [Rudy Desjardins]
+
+
+
+AUTHORS
+
+Tom Preston-Werner
+Kevin Clark

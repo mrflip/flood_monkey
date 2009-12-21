@@ -1,0 +1,10 @@
+* Documentation improvements
+
+* ensure test suite passes on non-GNU/Linux systems
+  (likely that it already does)
+
+* fix const-correctness in HTTP parser
+
+* performance validation (esp. TeeInput)
+
+* improve test suite (steal from Rainbows!, probably...)
