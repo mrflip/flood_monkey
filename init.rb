@@ -1,6 +1,6 @@
 ::ROOT_DIR = File.expand_path(File.dirname(__FILE__)) unless defined? ::ROOT_DIR
 # require "rubygems"
-
+$: << ROOT_DIR
 begin
   require "vendor/dependencies/lib/dependencies"
 rescue LoadError
@@ -10,9 +10,11 @@ require "monk/glue"
 require "json"
 require 'sinatra'
 require 'haml'
+require 'extlib'
 # require 'dm-core'
 # require 'dm-validations'
 # require 'dm-timestamps'
+Dir[ROOT_DIR+'/config/initializers/*.rb'].each{|file| require file.gsub(/\.rb$/, '\1') }
 
 class Main < Monk::Glue
   set :app_file, __FILE__
@@ -34,3 +36,4 @@ end
 # DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/#{sqlite3_path}")
 
 Main.run! if Main.run?
+
