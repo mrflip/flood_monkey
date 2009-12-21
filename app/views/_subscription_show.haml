@@ -1,0 +1,6 @@
+%table
+  %tr
+    - grid_for_hash subscription.pairs
+= link_to "Show",      "#{URL_BASE}/subscriptions/#{subscription.id}"
+= link_to "Re-enable", "#{URL_BASE}/subscriptions/#{subscription.id}/update"
+= link_to "Delete",    "#{URL_BASE}/subscriptions/#{subscription.id}/delete"

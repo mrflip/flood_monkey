@@ -1,0 +1,7 @@
+%ul
+  -(@subscriptions||[]).each do |subscription|
+    %li
+      =haml_partial :subscription_show, :locals => { :subscription => subscription }
+%ul
+  %li=link_to "sample create", "/endpoint/myspace/subscriptions/create/note"
+  %li=link_to "sample delete", "/endpoint/myspace/subscriptions/1/delete"
