@@ -8,7 +8,7 @@ require "sass"
 Monk = Module.new unless defined? Monk
 
 class Monk::Glue < Sinatra::Base
-  
+
   # Helper method for file references.
   #
   # @param args [Array] Path components relative to ROOT_DIR.
@@ -17,24 +17,24 @@ class Monk::Glue < Sinatra::Base
   def self.root_path(*args)
     File.join(ROOT_DIR, *args)
   end
-  
+
   # @see Monk::Glue.root_path
   def root_path(*args)
     self.class.root_path(*args)
   end
-  
+
   # Set option root_dir. Skleton might have defined ROOT_DIR
-  set(:roo_dir, defined?(ROOT_DIR) ? ROOT_DIR : $0) unless respond_to? :roo_dir 
-  
-  set :dump_errors, true
-  set :logging, true
-  set :methodoverride, true
-  set :raise_errors, Proc.new { test? }
-  set :root, root_path
-  set :run, Proc.new { $0 == app_file }
+  set(:root_dir, defined?(ROOT_DIR) ? ROOT_DIR : $0) unless respond_to? :root_dir
+
+  set :dump_errors,     true
+  set :logging,         true
+  set :methodoverride,  true
+  set :raise_errors,    Proc.new { test? }
+  set :root,            root_path
+  set :run,             Proc.new { $0 == app_file }
   set :show_exceptions, Proc.new { development? }
-  set :static, true
-  set :views, root_path("app", "views")
+  set :static,          true
+  set :views,           root_path("app", "views")
 
   use Rack::Session::Cookie
 
@@ -62,11 +62,11 @@ class Monk::Glue < Sinatra::Base
     def partial(template, locals = {})
       haml(template, {:layout => false}, locals)
     end
-    
+
     %w[environment production? development? test?].each do |meth|
       define_method(meth) { |*a| Main.send(meth, *a) }
     end
-    
+
   end
 end
 
