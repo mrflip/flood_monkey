@@ -108,6 +108,7 @@ Subscription.class_eval do
     result, raw_hsh, subscription.messages = request_json_safely(:get, "/stream/subscription/#{id}") do |result, raw_hsh|
       subscription.merge! fix_hash(raw_hsh['Subscription'])
     end
+    subscription.fix!
     subscription
   end
 

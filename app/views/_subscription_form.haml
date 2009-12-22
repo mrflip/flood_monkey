@@ -1,4 +1,7 @@
-%form{ :method => method, :action => form_url }
+%form{ :method => 'post', :action => form_url }
+  %div{ :style => "margin: 0pt; padding: 0pt; display: inline;" }
+    %input{ :type => "hidden", :value => method, :name => "_method" }
+
   - labeled_field       subscription, :rate do
     - collection_select subscription, :rate, (1..100).to_a
     .inline.help        Percentage of stream sampled

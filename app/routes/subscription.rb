@@ -77,7 +77,6 @@ class Main
 
   post "#{MYSPACE_URL_BASE}/subscriptions" do
     create_subscription params[:subscription]
-    #h [params, Subscription.from_params(params['subscription'])].inspect
   end
 
   #
