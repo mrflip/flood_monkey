@@ -21,15 +21,16 @@ Subscription.class_eval do
     :type        => "All",
     :meta_data   => "UserInfo,UserSubscribers,ApplicationData",
     :format      => "application/json",
-    :endpoint    => Main.settings(:myspace)[:pub_callback_url],
+    :endpoint    => Main.settings(:myspace)[:pub_callback_url]+'/generic',
     :status      => 'Active',
     :remove_list => nil,
   }
   attr_accessor :messages
+  attr_accessor :slug
   cattr_accessor :accessible_attributes
   self.accessible_attributes = [
     :rate, :batch_size, :type, :meta_data, :format, :endpoint, :status,
-    :query, :query_as_json
+    :query, :query_as_json, :slug
   ]
 
   def initialize *args
@@ -52,6 +53,9 @@ Subscription.class_eval do
 
   def self.fix_hash hsh={}
     hsh = hsh.underscore_keys
+    # hsh[:batch_size] = hsh[:batch_size].to_i     unless hsh[:batch_size].blank?
+    # hsh[:rate]       = hsh[:rate].to_i           unless hsh[:rate].blank?
+    # hsh[:meta_data]  = hsh[:meta_data].join(",") if  (! hsh[:meta_data].blank?) && hsh[:meta_data].respond_to?(:join)
     hsh = DEFAULT_PARAMS.deep_merge hsh
   end
 
@@ -73,6 +77,14 @@ Subscription.class_eval do
         :val   => new_query
       }
     end
+  end
+
+  def slug
+    @slug ||= self.endpoint.to_s.gsub(%r{.*/}, '')
+  end
+  def slug= _slug
+    @slug = _slug.gsub(/\W+/, '')
+    self.endpoint = Main.settings(:myspace)[:pub_callback_url] + '/' + @slug unless @slug.blank?
   end
 
   def to_myspace_json
@@ -123,6 +135,7 @@ Subscription.class_eval do
     return subscription if ! subscription.valid?
     # Update the description
     subscription.merge! hsh
+    subscription.fix!
     subscription.update
     subscription
   end

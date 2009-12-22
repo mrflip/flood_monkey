@@ -2,6 +2,9 @@
   %div{ :style => "margin: 0pt; padding: 0pt; display: inline;" }
     %input{ :type => "hidden", :value => method, :name => "_method" }
 
+  - labeled_field       subscription, :slug do
+    - text_field subscription, :slug
+    .inline.help        Name for this stream - is appended to the callback url
   - labeled_field       subscription, :rate do
     - collection_select subscription, :rate, (1..100).to_a
     .inline.help        Percentage of stream sampled
@@ -21,8 +24,9 @@
   -# - labeled_field       subscription, :status do
   -#   - checkbox          subscription, :status, 'Active'
   %dt  Status
-  %dd= subscription.status
-    
+  %dd
+    = subscription.status
+    %input{ :type => "hidden", :value => 'Active', :name => "subscription[status]" }
   - labeled_field       subscription, :query_as_json do
     - text_area subscription, :query_as_json, :rows =>10
     %ul.help.inline

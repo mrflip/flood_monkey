@@ -3,13 +3,14 @@ FileUtils.mkdir_p  UNICORN_DIR+'/tmp'
 FileUtils.mkdir_p  UNICORN_DIR+'/log'
 
 case ENV['RACK_ENV']
-when 'production'
-  worker_processes  5
-  preload_app       true
-else
+when 'development'
   worker_processes  2
   preload_app       false
+else
+  worker_processes  10
+  preload_app       true
 end
+
 timeout             80
 # listen            8000, :tcp_nopush => true
 listen              UNICORN_DIR+'/tmp/unicorn.sock', :backlog => 2048
