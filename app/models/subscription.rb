@@ -21,25 +21,44 @@ Subscription.class_eval do
     :type        => "All",
     :meta_data   => "UserInfo,UserSubscribers,ApplicationData",
     :format      => "application/json",
-    :endpoint    => Monk::Glue.settings(:myspace)[:pub_callback_url],
-    :status      => nil,
+    :endpoint    => Main.settings(:myspace)[:pub_callback_url],
+    :status      => 'Active',
     :remove_list => nil,
   }
   attr_accessor :messages
+  cattr_accessor :accessible_attributes
+  self.accessible_attributes = [
+    :rate, :batch_size, :type, :meta_data, :format, :endpoint, :status,
+    :query, :query_as_json
+  ]
 
   def initialize *args
     super *args
-    self.batch_size = self.batch_size.to_i unless self.batch_size.blank?
-    self.rate       = self.rate.to_i       unless self.rate.blank?
+    self.fix!
   end
 
   def self.from_hash hsh={}
     super fix_hash(hsh), true
   end
 
+  def self.from_params params
+    subscription = self.from_hash DEFAULT_PARAMS
+    params.each do |attr, val|
+      subscription.send("#{attr}=", val) if accessible_attributes.include?(attr.to_sym)
+    end
+    subscription.fix!
+    subscription
+  end
+
   def self.fix_hash hsh={}
     hsh = hsh.underscore_keys
     hsh = DEFAULT_PARAMS.deep_merge hsh
+  end
+
+  def fix!
+    self.batch_size = batch_size.to_i     unless self.batch_size.blank?
+    self.rate       = rate.to_i           unless self.rate.blank?
+    self.meta_data  = meta_data.join(",") if  (! self.meta_data.blank?) && meta_data.respond_to?(:join)
   end
 
   def query_as_json
@@ -66,7 +85,7 @@ Subscription.class_eval do
   end
 
   def self.create hsh
-    subscription = Subscription.from_hash hsh
+    subscription = Subscription.from_params hsh
     result, raw_hsh, subscription.messages = request_json_safely(:post, "/stream/subscription", subscription.to_myspace_json) do |result, raw_hsh|
       subscription_url = raw_hsh['statusLink']
       subscription.id  = subscription_url.gsub(%r{.*/stream/subscription/(\d+)$}, '\1').to_i
@@ -78,7 +97,7 @@ Subscription.class_eval do
     subscriptions = nil
     result, raw_hsh, messages = request_json_safely(:get, "/stream/subscription/@all") do |result, raw_hsh|
       subscriptions = raw_hsh['Subscriptions'].map do |hsh|
-        Subscription.from_hash fix_hash(hsh['Subscription'])
+        Subscription.from_hash hsh['Subscription']
       end
     end
     [subscriptions, messages]
@@ -87,8 +106,7 @@ Subscription.class_eval do
   def self.get id
     subscription = self.new
     result, raw_hsh, subscription.messages = request_json_safely(:get, "/stream/subscription/#{id}") do |result, raw_hsh|
-      raw_hsh = fix_hash(raw_hsh['Subscription'])
-      subscription.merge! raw_hsh
+      subscription.merge! fix_hash(raw_hsh['Subscription'])
     end
     subscription
   end

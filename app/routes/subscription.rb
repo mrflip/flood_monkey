@@ -7,7 +7,7 @@ class Main
   #
   get "#{MYSPACE_URL_BASE}/subscriptions/new/?$" do
     @subscription = Subscription.from_hash :foo => 'bar'
-    haml :subscription_edit
+    haml :subscription_new
   end
 
   #
@@ -51,7 +51,7 @@ class Main
   end
 
   #
-  # Create Subscription
+  # Default Subscription
   #
   get %{#{MYSPACE_URL_BASE}/subscriptions/create/:obj_type} do
     obj_type = params[:obj_type] || 'note'
@@ -77,7 +77,7 @@ class Main
 
   post "#{MYSPACE_URL_BASE}/subscriptions" do
     create_subscription params[:subscription]
-    # h params.inspect
+    #h [params, Subscription.from_params(params['subscription'])].inspect
   end
 
   #

@@ -1,19 +1,46 @@
 %form{ :method => method, :action => form_url }
-  -dl_dt_text_field subscription, :rate
-  -dl_dt_text_field subscription, :batch_size
-  -dl_dt_text_field subscription, :type
-  -dl_dt_text_field subscription, :meta_data
-  %dt  Format
-  %dd= subscription.format
+  - labeled_field       subscription, :rate do
+    - collection_select subscription, :rate, (1..100).to_a
+    .inline.help        Percentage of stream sampled
+    
+  - labeled_field       subscription, :batch_size do
+    - collection_select subscription, :batch_size, [1, 10, 20, 100, 200, 1000, 2000, 10_000]
+    .inline.help        Maximum number of events in each publishing callback
+
+  - labeled_field       subscription, :type do
+    - collection_select subscription, :type, %w[all application_users application_users_and_friends user_list], :camelize, :humanize
+
+  - labeled_field       subscription, :meta_data do
+    - checkbox_group    subscription, :meta_data, %w[UserInfo UserSubscribers ApplicationData]
+    -# .help        	UserInfo (UserId , DisplayName, LargeProfileImage, MediumProfileImage, UserType, Nickname, ProfileUrl, HasApp) ; UserSubscribers (User’s subscribers (followers), Up to 1000 IDs per request ) ; ApplicationData (User’s application data )
+  - labeled_field       subscription, :format do
+    - collection_select subscription, :format, { 'application/atom+xml' => 'XML', 'application/json' => 'JSON' }
+  -# - labeled_field       subscription, :status do
+  -#   - checkbox          subscription, :status, 'Active'
+  %dt  Status
+  %dd= subscription.status
+    
+  - labeled_field       subscription, :query_as_json do
+    - text_area subscription, :query_as_json, :rows =>10
+    %ul.help.inline
+      %li query-user_type:	StandardAccount, Band, Comedian, FilmMaker, Advertiser
+      %li query-text:	        A word or a phrase within the event. Alphanumerics only, up to 140 characters
+      %li query-culture:	5 character culture code
+      %li query-location-lat, query-location-lng, query-location-radius
+      %li age:	                (a positive integer)
+      %li gender:	        Female, Male
+      %li
+        Helpful links:
+        !=link_to "Stream API Documentation", "http://wiki.developer.myspace.com/index.php?title=Real_Time_Stream_Functional_Overview"
+        &mdash;
+        !=link_to "MySpace API Announcement", "http://developer.myspace.com/Community/blogs/devteam/archive/2009/12/08/opening-the-flood-gates-and-unleashing-the-data.aspx"
+    %ul.help
+      %li query-object:	        person, band, comedian, filmmaker, group, friend_category, profile, file, photo, video, tv-episode, movie, video-podcast, audio, audio-podcast, song, bookmark, review, article, blog-entry, note, bulletin, forum_topic, event, bandshow, birthday, contest, application, mobileapplication, poll, name, photo-album, music-album, playlist, place, comment, userpage, channelpage, socialwebsite, emailaddress, website
+      %li query-verb:	        post, share, save, play, make-friend, join, favorite, follow, tag, accepttag, update, install, show, use, rsvp-yes, rsvp-no, rsvp-maybe, register, delete
+      %li query-source:	        Web, Mobile, TwitterSync, for applications, an application is specified as follows: "applicationId.123456" where 123456 is the application ID
+      
   %dt  Endpoint
   %dd= subscription.endpoint
-  -dl_dt_text_field subscription, :status, :value => 'Active'
-
-  %dt
-    -label subscription, :query_as_json
-  %dd
-    -text_area subscription, :query_as_json, :rows =>10
-  
   %dt &nbsp;
   %dd
     -submit_button "#{action.humanize} subscription"

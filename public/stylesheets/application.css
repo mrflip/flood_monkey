@@ -42,21 +42,32 @@ dt {
    background-repeat:    no-repeat;
    background-position:  0px 4px;
    clear:                left;
-   width:                200px;
+   width:                170px;
    min-height:           24px;
 }
   
 dl     { float: left; display: block;        }
 dd, dt { float: left; display: inline-block; }
- 
-dd input[type="text"], dd textarea {
-   width: 400px;
-   font-size: 14px;
-   line-height: 1.5;
-   padding: 2px;
-   border: 1px dotted gray;
-}
 
+select { padding-right: 10px;  }
+option { min-width: 200px; }
+dd input[type="text"], option, select, dd textarea {
+   font-size:   14px;
+   line-height: 1.5;
+   }
+dd input[type="text"], dd textarea {
+   width:       400px;
+   padding:     2px;
+   border:      1px dotted gray;
+}
+.help, .help li {
+   font-size:  11px;
+   color:       #666; }
+.help {
+   width:       730px;
+   }
+.help.inline { width: 330px; display: inline-block }
+   
 /* ===========================================================================
  *
  * Grid Tables
