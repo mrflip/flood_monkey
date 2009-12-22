@@ -1,5 +1,5 @@
 class String
-  [:camelize, :underscore].each do |inflection|
+  [:camelize, :underscore, :humanize].each do |inflection|
     next if self.respond_to?(inflection)
     self.class_eval %Q{
     def #{inflection}

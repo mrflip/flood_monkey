@@ -1,0 +1,19 @@
+%form{ :method => method, :action => form_url }
+  -dl_dt_text_field subscription, :rate
+  -dl_dt_text_field subscription, :batch_size
+  -dl_dt_text_field subscription, :type
+  -dl_dt_text_field subscription, :meta_data
+  %dt  Format
+  %dd= subscription.format
+  %dt  Endpoint
+  %dd= subscription.endpoint
+  -dl_dt_text_field subscription, :status, :value => 'Active'
+
+  %dt
+    -label subscription, :query_as_json
+  %dd
+    -text_area subscription, :query_as_json, :rows =>10
+  
+  %dt &nbsp;
+  %dd
+    -submit_button "#{action.humanize} subscription"

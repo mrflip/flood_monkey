@@ -1,0 +1,2 @@
+.subscription.edit
+  !=partial :_subscription_form, :subscription => @subscription , :action => 'update', :method => 'PUT', :form_url => MYSPACE_URL_BASE+"/subscriptions/#{@subscription.id}"

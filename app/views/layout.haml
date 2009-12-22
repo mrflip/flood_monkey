@@ -10,22 +10,19 @@
   %body
     #container
       != partial :_topbar
-
-      = session.inspect
       - unless session[:flash].blank?
         #flash
-        - session[:flash].each do |flash_type, flash_text|
-          %div{ :class => flash_type }
-            = flash_text
+          - session[:flash].each do |flash_type, flash_text|
+            %div{ :class => flash_type }
+              = flash_text
         -session[:flash] = {}
         %br.clear
       
       != yield
 
       %br.clear
-      != @dump
-    
+      = @dump
 
-    %script{ :type => "text/javascript", :src => "http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"    }
-    %script{ :type => "text/javascript", :src => "/javascripts/application.js" }
+    -# %script{ :type => "text/javascript", :src => "http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"    }
+    -# %script{ :type => "text/javascript", :src => "/javascripts/application.js" }
     != @final_js  

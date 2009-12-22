@@ -27,6 +27,36 @@
             overflow:             hidden;
           }
 
+.subscriptions {
+   font-size:            14px;
+   }
+   
+li, dt, dd {
+   font-size:            14px;
+   line-height:          1.75;
+   margin-top:          2px;
+}
+dt {
+   list-style:           none;
+   padding-left:         24px;
+   background-repeat:    no-repeat;
+   background-position:  0px 4px;
+   clear:                left;
+   width:                200px;
+   min-height:           24px;
+}
+  
+dl     { float: left; display: block;        }
+dd, dt { float: left; display: inline-block; }
+ 
+dd input[type="text"], dd textarea {
+   width: 400px;
+   font-size: 14px;
+   line-height: 1.5;
+   padding: 2px;
+   border: 1px dotted gray;
+}
+
 /* ===========================================================================
  *
  * Grid Tables
