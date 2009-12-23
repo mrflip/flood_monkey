@@ -1,26 +1,54 @@
 defaults: &defaults
-  :app_name:            monk_rock
-  :domain:              foo.com
-  :repository:          git://github.com/mrflip/cartilage.git
+  :app_name:            flood_monkey
+  # CHANGEME -- set your domain
+  :domain:              yourdomain.com
+  # CHANGEME -- point to your git repo
+  :repository:          git://github.com/mrflip/flood_monkey.git
+
+  # CHANGEME -- Choose the username and password that protect subscription calls
+  :basic_auth:
+    :username:            username_for_basic_auth
+    :password:            password_for_basic_auth
+
+  # Settings for myspace API calls
+  :myspace:
+    # CHANGEME -- set to the full url to your OAuth callback
+    :oauth_callback_url:   http://yourdomain.com/endpoint/myspace/cb
+    # CHANGEME -- Visit http://developer.myspace.com/Apps.mvc to find your keys
+    :consumer_key:         your_myspace_consumer_key
+    :consumer_secret:      your_myspace_consumer_secret
+    :oauth_setup:
+      :site:               http://api.myspace.com
+      :request_token_path: /request_token
+      :authorize_path:     /authorize
+      :access_token_path:  /access_token
+      :oauth_version:      1.0
+      :scheme:             :header
+      :http_method:        :get
  
 :development:
   <<: *defaults
-  :session_secret:      8d52a3f4dbb313f5634baf178cd6eca5fa6f841962a01040ca0a63098113b18ef3869f356220fb1c
+  :log_level:           info
+  # CHANGEME -- mash on the keyboard or something
+  :session_secret:      SOMETHINGLONGANDCOMPLICATED_1
   :sqlite3:
     :adapter: sqlite3
     :database: db/development.sqlite3
 
 :test:
   <<: *defaults
-  :session_secret:     3850043ed66fdb0e14bc7bcd83318b5bb961107b58d335f2c30726924e5b46d4d5595b06ebb6eeb1
+  :log_level:           debug
+  # CHANGEME -- mash on the keyboard or something
+  :session_secret:      SOMETHINGLONGANDCOMPLICATED_2
   :sqlite3:
     :adapter: sqlite3
     :database: db/test.sqlite3
 
 :production:
   <<: *defaults
-  :session_secret:      8bf2b69bfba64fdb367aa815cc26f3de54dfc96a778ba4acf029ec1d416df64f15c44ada346770d5
+  :log_level:           warn
+  # CHANGEME -- mash on the keyboard or something
+  :session_secret:      SOMETHINGLONGANDCOMPLICATED_3
   :sqlite3:
     :adapter: sqlite3
     :database: db/production.sqlite3
-

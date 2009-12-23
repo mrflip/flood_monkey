@@ -5,17 +5,14 @@ FloodMonkey helps manage subscriptions to the MySpace Flood, their real-time act
 FloodMonkey is designed for people looking to capture firehose-level (100%) data streams.  We use it to haul in 25GB+ of raw data every day with a single small EC2 instance and room to spare.
 
 * A simple Sinatra frontend to manage and monitor subscriptions
-* Even yet still more lightweight scripts to handle publish callbacks as quickly and simply as possible, and stream them directly to disk.
-* Simple worker scripts to bundle the data and ship it to S3
+* An even yet still more lightweight rack responder to stream callbacks directly to disk.
 * Scripts to deploy, configure and monitor the various moving parts. 
 
-FloodMonkey is *not* designed for anything real-time. The endpoint streams everything to disk for late bulk processing -- we use "wukong":http://github.com/mrflip/wukong and "wuclan.":http://github.com/mrflip/wuclan
+FloodMonkey is *not* designed for anything real-time. The endpoint streams everything to disk for bulk processing later -- we use "wukong":http://github.com/mrflip/wukong and "wuclan.":http://github.com/mrflip/wuclan
 
 h2. Credits
 
-* 
 * The frontend app is based on Monk / Cartilage, a skeleton for building Sinatra apps.
-
 
 h2. Setup
 
@@ -30,6 +27,8 @@ Ruby Enterprise Edition
     sudo ./installer --auto /usr/local/ree;
 </pre>    
 
+Nginx
+
 <pre>
     latest_nginx=nginx-0.7.64;
     wget "http://sysoev.ru/nginx/${latest_nginx}.tar.gz" ;
@@ -37,12 +36,13 @@ Ruby Enterprise Edition
     sudo /usr/local/ree/bin/passenger-install-nginx-module --prefix=/usr/local/nginx --nginx-source-dir=/usr/local/src/$latest_nginx --extra-configure-flags=' --with-http_ssl_module --with-http_gzip_static_module --add-module=/usr/local/src/ngx-fancyindex-0.2 --add-module=/usr/local/src/nginx_upload_module-2.0.10 --add-module=/usr/local/src/nginx_uploadprogress_module --with-pcre --with-ld-opt=-lssl --with-sha1-asm --with-md5=/usr/include --with-md5-asm --http-proxy-temp-path="/tmp/nginx-proxy_temp" --http-fastcgi-temp-path="/tmp/nginx-fastcgi_temp" --http-client-body-temp-path="/tmp/nginx-client_body_temp" --pid-path="/var/run/nginx/nginx.pid" --conf-path="/slice/etc/nginx/nginx.conf" --lock-path="/var/run/nginx/nginx.lock" --http-log-path="/var/log/nginx/access.log" --error-log-path="/var/log/nginx/error.log" '
 </pre>
 
+Add the deploy user
+
 <pre>
     sudo useradd -G admin,sudo deploy
     sudo passwd deploy
 </pre>
 
-sudo gem install rack rack-test sinatra haml extlib monk-glue json unicorn god godhead haml 
 cap deploy:setup
 cap deploy:cold
-scp  config/settings.yml remotehost.com:/var/www/cartilage/shared/config/settings.yml
+scp -p config/settings.yml remotehost.com:/var/www/cartilage/shared/system/settings.yml
