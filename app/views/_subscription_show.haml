@@ -1,6 +1,7 @@
 .show.subscription
   %table.grid
-    - grid_for_hash subscription
+    %caption= subscription.titleize
+    - grid_for_hash subscription.pairs
 
   - link_to "Show",      "#{MYSPACE_URL_BASE}/subscriptions/#{subscription.id}"
   - link_to "Re-enable", "#{MYSPACE_URL_BASE}/subscriptions/#{subscription.id}/reactivate"

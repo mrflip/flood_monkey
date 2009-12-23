@@ -1,4 +1,16 @@
 %h1 Debug View
 
-= session.inspect
-= request.inspect
+%h3 Sinatra Setup
+%table
+  - grid_row_for_hash "ENV['RACK_ENV']", ENV['RACK_ENV']
+  - %w[environment logging sessions clean_trace static methodoverride root public views run server host port app_file dump_errors raise_errors lock].each do |sinatra_setting|
+    - grid_row_for_hash sinatra_setting, Main.send(sinatra_setting)
+    
+%h3 Session
+%table
+  - grid_for_hash session.to_hash
+
+%h3 Full Environment
+%table
+  - grid_for_hash env.to_hash.sort
+

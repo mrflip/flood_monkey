@@ -16,7 +16,7 @@ else
   worker_processes  5
   preload_app       true
   stderr_path         app_dir+'/shared/log/unicorn.stderr.log'
-  stderr_path         app_dir+'/shared/log/unicorn.stdout.log'
+  stdout_path         app_dir+'/shared/log/unicorn.stdout.log'
 end
 
 # # REE

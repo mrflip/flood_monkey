@@ -28,7 +28,9 @@ class Main < Monk::Glue
   end
   configure :development, :test do
     set :static,           true
+    set :clean_trace,      true
   end
+  set :logging,          false
 
   # use Rack::Session::Cookie,
   #   :key          => 'rack.session',

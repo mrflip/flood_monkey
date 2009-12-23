@@ -35,7 +35,7 @@
 .subscriptions { font-size: 14px; }
 .show          { margin: 2em 0; }
 caption        { font-weight: bold ; font-size: 1.125em }
-.attr          {  width: 200px; }
+.attr          {  width: 200px; min-width: 200px; }
 .val           {  background-color:     #f8f8f8; }
 
 /*
@@ -72,7 +72,8 @@ dd input[type="text"], dd textarea, option, select
   Utility classes
 */
 
-.heavy            { color: black; font-size: 110%; font-weight: bold;   }
+.quiet            { color: #4a4a47; font-size: 12px; font-style: italic; }
+.heavy            { color: black;   font-size: 110%; font-weight: bold;   }
 .meta             { color: #aaa; }
 img               { border: 0px none #fff }
 .nopadding        { padding: 0px !important }

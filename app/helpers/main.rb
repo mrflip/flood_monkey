@@ -5,18 +5,17 @@ class Main
 
     # simple dumper for a hash like (stuct, list of pairs, whatever)
     def grid_for_hash hsh
-      haml_tag :caption, h(hsh.titleize) if hsh.respond_to? :titleize
-      hsh.each_pair do |attr, val|
-        haml_tag :tr do
-          grid_row_for_hash attr, val
-        end
+      hsh.each do |attr, val|
+        grid_row_for_hash attr, val
       end
     end
 
     # table row for an attribute-value pair
     def grid_row_for_hash attr, val
-      haml_tag(:th, h(attr),         :class => 'attr' )
-      haml_tag(:td, h(val.inspect),  :class => 'val'  )
+      haml_tag :tr do
+        haml_tag(:th, h(attr),         :class => 'attr' )
+        haml_tag(:td, h(val.inspect),  :class => 'val'  )
+      end
     end
 
     # debugging helper - inspects given objects in a preformatted block

@@ -2,34 +2,45 @@
   %div{ :style => "margin: 0pt; padding: 0pt; display: inline;" }
     %input{ :type => "hidden", :value => method, :name => "_method" }
 
-  - labeled_field       subscription, :slug do
-    - text_field subscription, :slug
-    .inline.help        Name for this stream - is appended to the callback url
-  - labeled_field       subscription, :rate do
+  - labeled_field               subscription, :slug do
+    - text_field                subscription, :slug
+    .inline.help                Name for this stream - is appended to the callback url
+  %dt  Endpoint
+  %dd
+    .inputbox.quiet
+      = subscription.endpoint
+    .inline.help                URL for publish callbacks. Will be updated from the slug.
+  - labeled_field               subscription, :rate do
     .inputbox
-      - collection_select subscription, :rate, [1, 2, 3, 4, 5, 8, 10, 15, 20, 30, 40, 50, 75, 100]
-    .inline.help        Percentage of stream sampled
+      - collection_select       subscription, :rate, [1, 2, 3, 4, 5, 8, 10, 15, 20, 30, 40, 50, 75, 100]
+    .inline.help                Percentage of stream to sample. Throttles flood.
     
-  - labeled_field       subscription, :batch_size do
-    - collection_select subscription, :batch_size, [1, 10, 20, 100, 200, 1000, 2000, 10_000]
-    .inline.help        Maximum number of events in each publishing callback
+  - labeled_field               subscription, :batch_size do
+    .inputbox
+      - collection_select       subscription, :batch_size, [1, 10, 20, 100, 200, 1000, 2000, 10_000]
+    .inline.help                Max events/callback. Currently ignored by MySpace: 1 ev/cb
 
-  - labeled_field       subscription, :type do
-    - collection_select subscription, :type, %w[all application_users application_users_and_friends user_list], :camelize, :humanize
+  - labeled_field               subscription, :type do
+    .inputbox
+      - collection_select       subscription, :type, %w[all application_users application_users_and_friends user_list], :camelize, :humanize
+    .inline.help                For UserList you'll need to craft the request yourself.
 
-  - labeled_field       subscription, :meta_data do
-    - checkbox_group    subscription, :meta_data, %w[UserInfo UserSubscribers ApplicationData]
-    -# .help        	UserInfo (UserId , DisplayName, LargeProfileImage, MediumProfileImage, UserType, Nickname, ProfileUrl, HasApp) ; UserSubscribers (User’s subscribers (followers), Up to 1000 IDs per request ) ; ApplicationData (User’s application data )
-  - labeled_field       subscription, :format do
-    - collection_select subscription, :format, { 'application/atom+xml' => 'XML', 'application/json' => 'JSON' }
-  -# - labeled_field       subscription, :status do
-  -#   - checkbox          subscription, :status, 'Active'
+  - labeled_field               subscription, :meta_data do
+    .inputbox
+      - checkbox_group          subscription, :meta_data, %w[UserInfo UserSubscribers ApplicationData]
+    .inline.help                Callback post contents. Only first 1000 friends listed.
+      
+  - labeled_field               subscription, :format do
+    .inputbox
+      - collection_select       subscription, :format, { 'application/atom+xml' => 'XML', 'application/json' => 'JSON' }
+    .inline.help                Currently ignored by MySpace: XML only.
   %dt  Status
   %dd
     = subscription.status
     %input{ :type => "hidden", :value => 'Active', :name => "subscription[status]" }
-  - labeled_field       subscription, :query_as_json do
-    - text_area subscription, :query_as_json, :rows =>10
+      
+  - labeled_field               subscription, :query_as_json do
+    - text_area                 subscription, :query_as_json, :rows =>10
     %ul.help.inline
       %li query-user_type:	StandardAccount, Band, Comedian, FilmMaker, Advertiser
       %li query-text:	        A word or a phrase within the event. Alphanumerics only, up to 140 characters
@@ -47,8 +58,6 @@
       %li query-verb:	        accepttag, delete, favorite, follow, install, join, make-friend, play, post, register, rsvp-maybe, rsvp-no, rsvp-yes, save, share, show, tag, update, use
       %li query-source:	        Web, Mobile, TwitterSync, for applications, an application is specified as follows: "applicationId.123456" where 123456 is the application ID
       
-  %dt  Endpoint
-  %dd= subscription.endpoint
   %dt &nbsp;
   %dd
     -submit_button "#{action.humanize} subscription"

@@ -17,12 +17,14 @@ class Main
   #
 
   # Base controls
-  get "#{MYSPACE_URL_BASE}" do
+  get "#{MYSPACE_URL_BASE}/?" do
     haml :root
   end
-  # KLUDGE -- expose logs to the world
-  get "#{MYSPACE_URL_BASE}/logs" do
-    File.open("views/log.txt").read
+
+  # Debug
+  get %r{.*/debug/?} do
+    protected!
+    haml :debug
   end
 
 private
