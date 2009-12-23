@@ -1,7 +1,8 @@
-%table
-  %tr
-    - grid_for_hash subscription.pairs
-!= link_to "Show",      "#{MYSPACE_URL_BASE}/subscriptions/#{subscription.id}"
-!= link_to "Re-enable", "#{MYSPACE_URL_BASE}/subscriptions/#{subscription.id}/reactivate"
-!= link_to "Edit",      "#{MYSPACE_URL_BASE}/subscriptions/#{subscription.id}/edit"
-!= link_to "Delete",    "#{MYSPACE_URL_BASE}/subscriptions/#{subscription.id}/delete"
+.show.subscription
+  %table.grid
+    - grid_for_hash subscription
+
+  - link_to "Show",      "#{MYSPACE_URL_BASE}/subscriptions/#{subscription.id}"
+  - link_to "Re-enable", "#{MYSPACE_URL_BASE}/subscriptions/#{subscription.id}/reactivate"
+  - link_to "Edit",      "#{MYSPACE_URL_BASE}/subscriptions/#{subscription.id}/edit"
+  - link_to "Delete",    "#{MYSPACE_URL_BASE}/subscriptions/#{subscription.id}/delete"

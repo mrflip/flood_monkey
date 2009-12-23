@@ -3,20 +3,19 @@
 %html{ "xml:lang" => "en", :lang => "en", "xmlns" => "http://www.w3.org/1999/xhtml", "xmlns:fb" => "http://www.facebook.com/2008/fbml" }
   %head
     %title= ['Streamweaver', @title].join('::')
-    %link{ :href => "/stylesheets/reset.css",       :rel => "stylesheet",    :type => "text/css" }
-    %link{ :href => "/stylesheets/application.css", :rel => "stylesheet",    :type => "text/css" }
-    %link{ :href => "/favicon.ico",                 :rel => "shortcut icon", :type => "image/x-icon" }
+    %link{ :href => "http://s1.infinitemonkeys.info/stylesheets/reset.css",       :rel => "stylesheet",    :type => "text/css" }
+    %link{ :href => "http://s1.infinitemonkeys.info/stylesheets/application.css", :rel => "stylesheet",    :type => "text/css" }
+    %link{ :href => "http://s1.infinitemonkeys.info/favicon.ico",                 :rel => "shortcut icon", :type => "image/x-icon" }
 
   %body
     #container
       != partial :_topbar
-      - unless session[:flash].blank?
-        #flash
-          - session[:flash].each do |flash_type, flash_text|
+      #flash
+        - [:success, :notice, :error].each do |flash_type|
+          - if flash.has?(flash_type)
             %div{ :class => flash_type }
-              = flash_text
-        -session[:flash] = {}
-        %br.clear
+              = flash[flash_type]
+      %br.clear
       
       != yield
 

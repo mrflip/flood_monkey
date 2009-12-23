@@ -15,7 +15,7 @@ class Main
   #
   get "#{MYSPACE_URL_BASE}/subscriptions/:id/edit/?$" do
     @subscription = Subscription.get(params[:id])
-    set_flash @subscription.messages
+    set_flash @subscription.messages, :now
     if @subscription.valid? then haml(:subscription_edit) else haml(:subscription_list) end
   end
 
@@ -25,19 +25,8 @@ class Main
   #
   def update_subscription hsh
     @subscription = Subscription.get_and_update params[:id], hsh
-    set_flash @subscription.messages
+    set_flash @subscription.messages, :now
     if @subscription.valid? then haml(:subscription_show) else haml(:subscription_list) end
-  end
-
-  def create_subscription hsh
-    @subscription = Subscription.create hsh
-    set_flash @subscription.messages
-      @dump = [@subscription, params].inspect
-    if @subscription.valid? then
-      haml(:subscription_show)
-    else
-      haml(:subscription_list)
-    end
   end
 
   # Update Subscription from form
@@ -50,17 +39,6 @@ class Main
     update_subscription params[:subscription]
   end
 
-  #
-  # Default Subscription
-  #
-  get %{#{MYSPACE_URL_BASE}/subscriptions/create/:obj_type} do
-    obj_type = params[:obj_type] || 'note'
-    create_subscription(
-      :query => { :object => obj_type.to_s.camelize },
-      :endpoint => settings(:myspace)[:pub_callback_url] # + "/#{obj_type.to_s.underscore}"
-      )
-  end
-
   # Reactivate subscription when it's been disabled
   get "#{MYSPACE_URL_BASE}/subscriptions/:id/reactivate?$" do
     update_subscription :status => 'Active'
@@ -71,10 +49,38 @@ class Main
   #
   get "#{MYSPACE_URL_BASE}/subscriptions/:id/?$" do
     @subscription = Subscription.get(params[:id])
-    set_flash @subscription.messages
+    set_flash @subscription.messages, :now
     if @subscription.valid? then haml(:subscription_show) else haml(:subscription_list) end
   end
 
+  #
+  # Create subscription
+  #
+  def create_subscription hsh
+    @subscription = Subscription.create hsh
+    if @subscription.valid? then
+      set_flash @subscription.messages
+      redirect "#{MYSPACE_URL_BASE}/subscriptions/#{@subscription.id}"
+    else
+      set_flash @subscription.messages, :now
+      haml(:root)
+    end
+  end
+
+  #
+  # Create New Subscription From Defaults
+  #
+  get %{#{MYSPACE_URL_BASE}/subscriptions/create/:obj_type} do
+    obj_type = params[:obj_type].to_s
+    create_subscription(
+      :query    => { :object => obj_type.camelize },
+      :endpoint => MYSPACE_PUB_BASE+"/#{obj_type.underscore}"
+      )
+  end
+
+  #
+  # Create New Subscription
+  #
   post "#{MYSPACE_URL_BASE}/subscriptions" do
     create_subscription params[:subscription]
   end
@@ -93,8 +99,13 @@ class Main
   #
   get "#{MYSPACE_URL_BASE}/subscriptions/?$" do
     @subscriptions, messages = Subscription.list
-    set_flash messages
-    if messages[:error].blank? then
-      haml(:subscription_list) else redirect(MYSPACE_URL_BASE) end
+    if messages[:error].blank?
+      flash.now[:notice] = "No current subscriptions. Want to make one?" if @subscriptions.blank?
+      set_flash messages, :now
+      haml(:subscription_list)
+    else
+      set_flash messages
+      redirect(MYSPACE_URL_BASE)
+    end
   end
 end

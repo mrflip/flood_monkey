@@ -1,0 +1,27 @@
+  47085 http://activities.myspace.com/schema/1.0/ObjectTypes/Application
+ 213214 http://activities.myspace.com/schema/1.0/ObjectTypes/Band
+  12230 http://activities.myspace.com/schema/1.0/ObjectTypes/Bandshow
+   5199 http://activities.myspace.com/schema/1.0/ObjectTypes/ChannelPage
+   1045 http://activities.myspace.com/schema/1.0/ObjectTypes/Comedian
+   1940 http://activities.myspace.com/schema/1.0/ObjectTypes/Comment
+   3684 http://activities.myspace.com/schema/1.0/ObjectTypes/EmailAddress
+    696 http://activities.myspace.com/schema/1.0/ObjectTypes/Filmmaker
+   2662 http://activities.myspace.com/schema/1.0/ObjectTypes/Forum_Topic
+    616 http://activities.myspace.com/schema/1.0/ObjectTypes/Friend_Category
+   5810 http://activities.myspace.com/schema/1.0/ObjectTypes/MobileApplication
+   8110 http://activities.myspace.com/schema/1.0/ObjectTypes/Profile
+   3522 http://activities.myspace.com/schema/1.0/ObjectTypes/UserPage
+ 201699 http://activitystrea.ms/schema/1.0/audio
+  19023 http://activitystrea.ms/schema/1.0/blog-entry
+     17 http://activitystrea.ms/schema/1.0/bookmark
+  22952 http://activitystrea.ms/schema/1.0/event
+   4593 http://activitystrea.ms/schema/1.0/group
+   5705 http://activitystrea.ms/schema/1.0/note
+1536406 http://activitystrea.ms/schema/1.0/person
+ 626110 http://activitystrea.ms/schema/1.0/photo
+ 590180 http://activitystrea.ms/schema/1.0/photo-album
+     17 http://activitystrea.ms/schema/1.0/place
+  42450 http://activitystrea.ms/schema/1.0/playlist
+     17 http://activitystrea.ms/schema/1.0/review
+ 201699 http://activitystrea.ms/schema/1.0/song
+  16896 http://activitystrea.ms/schema/1.0/video

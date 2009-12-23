@@ -1,4 +1,7 @@
-.grid.grid3#topbar
-  .link== <a href="#{MYSPACE_URL_BASE}/subscriptions">List Subscriptions</a>
-  .link== <a href="#{MYSPACE_URL_BASE}/fake_post"    >Test Post to Endpoint</a>
+#header
+  %a.nopadding{ :href => "#{MYSPACE_URL_BASE}", :style => 'width: 80px' }
+    %img{ :src => '/images/monkeyshines_logo.png', :alt => '' }
+  <a href="#{MYSPACE_URL_BASE}/subscriptions">List Subscriptions</a>
+  <a href="#{MYSPACE_URL_BASE}/fake_post"    >Test Post to Endpoint</a>
+  <a href="#{MYSPACE_URL_BASE}/auth"    >Test OAuth</a>
 %br.clear

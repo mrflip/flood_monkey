@@ -7,105 +7,85 @@
   max-width:            950px;
   margin:               0 auto;
 }
-#footer, #topbar { clear: both; float: left }
+#header, #footer {
+   clear: both; float: left
+}
+#header {
+   background-color:  #eceff6;
+   color:             #333333;
+   border:            1px solid #d4dae8;
+   font-size:         13px;
+   font-weight:       bold;
+   margin:            0.5em auto 1.5em auto ;
+   padding:           0 6px;
+   width:             948px ;
+}
+#header a {
+   overflow:          hidden;
+   width:             150px;
+   padding:           26px 0 18px 4px ;
+   display:           inline-block;
+   min-height:        24px;
+}
 
 /* ===========================================================================
    Styles
 */
 
-.heavy            { color: black; font-size: 110%; font-weight: bold;   }
-.meta             { color: #aaa; }
-.list.aligned   a { width: 80px ; display: inline-block ; }
-.list.aligned60 a { width: 60px ; display: inline-block ; }
-
-.grid     { float: left; clear: both; line-height: 18px;
-            border: 1px solid #ddd ; border-width: 1px 0 0 1px;
-            margin: 0.5em auto 1.5em auto ;  width: 948px ; 
-          }
-.grid > div { float: left; clear: none;  
-            border: 1px solid #ddd ; border-width: 0 1px 1px 0;
-            overflow:             hidden;
-          }
-
-.subscriptions {
-   font-size:            14px;
-   }
-   
-li, dt, dd {
-   font-size:            14px;
-   line-height:          1.75;
-   margin-top:          2px;
-}
-dt {
-   list-style:           none;
-   padding-left:         24px;
-   background-repeat:    no-repeat;
-   background-position:  0px 4px;
-   clear:                left;
-   width:                170px;
-   min-height:           24px;
-}
-  
-dl     { float: left; display: block;        }
-dd, dt { float: left; display: inline-block; }
-
-select { padding-right: 10px;  }
-option { min-width: 200px; }
-dd input[type="text"], option, select, dd textarea {
-   font-size:   14px;
-   line-height: 1.5;
-   }
-dd input[type="text"], dd textarea {
-   width:       400px;
-   padding:     2px;
-   border:      1px dotted gray;
-}
-.help, .help li {
-   font-size:  11px;
-   color:       #666; }
-.help {
-   width:       730px;
-   }
-.help.inline { width: 330px; display: inline-block }
-   
-/* ===========================================================================
- *
- * Grid Tables
- */
-
-.grid > div {
-  font-size:            12px;
-  min-height:           18px; 
-  padding:              8px 0px 4px 10px;
-  width: 174px;
-} 
-.grid .bool  {
-  font-size:            18px;
-  padding:              5px 0   7px 10px; 
-  font-weight:          bold;
-}
-.bool.on          {  background-color:     #efe; }
-.bool.off         {  background-color:     #fee; }
-.bool.maybe       {  background-color:     #eee; }
-.val              {  background-color:     #f8f8f8; }
-.grid  > .attr    { width: 160px; } /* 1 10 242 1 10 242 1 10 242 1 */
-.grid  > .val     { width: 559px; } /* 1 10 242 1 10 242 1 10 242 1 */
-.grid  > div.link { border-width: 0px 1px 1px 0px; text-align: center }
-.grid4 > div.attr { width: 160px; } 
-.grid4 > div.val  { width: 189px; } 
-.gridb > div      { width: 259px; } /*  760 / 2 = 380 = 100 + 280 */
-.gridb .bool      { width:  90px; }
-.grid3 > div      { width: 236px; } /* 1 10 242 1 10 242 1 10 242 1 */
+.subscriptions { font-size: 14px; }
+.show          { margin: 2em 0; }
+caption        { font-weight: bold ; font-size: 1.125em }
+.attr          {  width: 200px; }
+.val           {  background-color:     #f8f8f8; }
 
 /*
-  Page layout
+  Forms
 */
+
+dl             { float: left; display: block;        }
+dd, dt         { float: left; display: inline-block; }
+li, dt, dd     {
+   font-size:           14px;
+   line-height:         1.75;
+   margin-top:          2px;
+}
+dt, .label     {
+   list-style:          none;
+   padding-left:        24px;
+   background-repeat:   no-repeat;
+   background-position: 0px 4px;
+   clear:               left;
+   width:               170px;
+   min-height:          24px;
+}
+dd input[type="text"], dd textarea { width: 400px; padding: 2px; border: 1px dotted gray; }
+dd .inputbox                       { width: 406px; display: inline-block }
+.help                              { width: 730px;  }
+.help.inline                       { width: 330px; display: inline-block }
+option                             { min-width: 200px; }
+select                             { padding-right: 10px;  }
+dd input[type="text"], dd textarea, option, select
+                                   { font-size:   14px; line-height: 1.5; }
+.help, .help li                    { font-size:  11px; color: #666;     }
+
+/*
+  Utility classes
+*/
+
+.heavy            { color: black; font-size: 110%; font-weight: bold;   }
+.meta             { color: #aaa; }
+img               { border: 0px none #fff }
+.nopadding        { padding: 0px !important }
 
 .clear {
    clear:        both;
    height:       0;
    overflow:     hidden;
 }
+
+/*
+  Flash messages
+*/
 
 #flash {
    max-width:    950px;
@@ -114,7 +94,6 @@ dd input[type="text"], dd textarea {
    overflow:     hidden;
    display:      block;
 }
-#flash a { text-decoration: underline;  }
 .error, .notice, .success {
    width:        922px;
    margin:       0;
@@ -123,105 +102,9 @@ dd input[type="text"], dd textarea {
    font-size:    14px;
    float:        left;
 }
-
 .error     { background: #fbe3e4; color: #a34;    border-color: #fbc2c4; }
 .error   a { color: #54c; }
 .notice    { background: #fff6bf; color: #817134; border-color: #ffd324; }
 .notice  a { color: #77b; }
 .success   { background: #d6ffcd; color: #529214; border-color: #65b27c; }
 .success a { color: #3a59a5; }
-
-.fieldWithErrors { display: inline; }
-#errorExplanation {
-   width: 400px;
-   border: 2px solid #CF0000;
-   padding: 0px;
-   padding-bottom: 12px;
-   margin-bottom: 20px;
-   background-color: #f0f0f0;
-}
-#errorExplanation h2 {
-   text-align: left;
-   font-weight: bold;
-   padding: 5px 5px 5px 15px;
-   font-size: 12px;
-   margin: 0;
-   background-color: #c00;
-   color: #fff;
-}
-#errorExplanation p {
-   color: #333;
-   margin-bottom: 0;
-   padding: 8px;
-}
-#errorExplanation ul {
-   margin: 2px 24px;
-}
-#errorExplanation ul li {
-   font-size: 12px;
-   list-style: disc;
-}
-
-/* Facebook Box Styles */
-.fbgreybox
-{
-  background-color:  #f7f7f7;
-  border:            1px solid #cccccc;
-  color:             #333333;
-  padding:           10px;
-  font-size:         13px;
-  font-weight:       bold;
-}
-.fbbluebox, .grid .link
-{
-  background-color:  #eceff6;
-  border:            1px solid #d4dae8;
-  color:             #333333;
-  font-size:         13px;
-  font-weight:       bold;
-}
-.fbbluebox {   padding:           10px; }
-.fbinfobox
-{
-  background-color:  #fff9d7;
-  border:            1px solid #e2c822;
-  color:             #333333;
-  padding:           10px;
-  font-size:         13px;
-  font-weight:       bold;
-}
-.fberrorbox
-{
-  background-color:  #ffebe8;
-  border:            1px solid #dd3c10;
-  color:             #333333;
-  padding:           10px;
-  font-size:         13px;
-  font-weight:       bold;
-}
-/*                 Content Divider on White Background */
-.fbcontentdivider
-{
-  margin-top:        15px;
-  margin-bottom:     15px;
-  width:             520px;
-  height:            1px;
-  background-color:  #d8dfea;
-}
-/*                 Facebook Tab Style */
-.fbtab
-{
-  padding:           8px;
-  background-color:  #d8dfea;
-  color:             #3b5998;
-  font-weight:       bold;
-  float:             left;
-  margin-right:      4px;
-  text-decoration:   none;
-}
-.fbtab:hover
-{
-  background-color:  #3b5998;
-  color:             #ffffff;
-  cursor:            hand;
-}

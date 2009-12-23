@@ -1,12 +1,7 @@
+%h1 List of Current Subscriptions
 -if @subscriptions.blank?
   .bigger.subscriptions  [No subscriptions found]
 -else
-  %ul.subscriptions
-    - @subscriptions.each do |subscription|
-      %li
-        !=partial :_subscription_show, :subscription => subscription
-%ul
-  %li!=link_to "New subscription",  "#{MYSPACE_URL_BASE}/subscriptions/new"
-  %li!=link_to "Create a music subscription", "#{MYSPACE_URL_BASE}/subscriptions/create/note"
-  %li!=link_to "Create a music subscription", "#{MYSPACE_URL_BASE}/subscriptions/create/music"
-  %li!=link_to "Fake a post to the publishing endpoint", "#{MYSPACE_URL_BASE}/fake_post/"
+  - @subscriptions.each do |subscription|
+    !=partial :_subscription_show, :subscription => subscription
+!=partial :_subscription_links

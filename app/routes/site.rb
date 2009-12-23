@@ -26,8 +26,9 @@ class Main
   end
 
 private
-  def set_flash messages
-    session[:flash].merge!(messages||{})
+  def set_flash messages, now=nil
+    if now then messages.each{|type, message| flash.now[type] = message }
+    else        messages.each{|type, message| flash[type]     = message } end
   end
 
 end

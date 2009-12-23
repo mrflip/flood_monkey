@@ -6,7 +6,8 @@
     - text_field subscription, :slug
     .inline.help        Name for this stream - is appended to the callback url
   - labeled_field       subscription, :rate do
-    - collection_select subscription, :rate, (1..100).to_a
+    .inputbox
+      - collection_select subscription, :rate, (1..100).to_a
     .inline.help        Percentage of stream sampled
     
   - labeled_field       subscription, :batch_size do
@@ -38,12 +39,12 @@
       %li gender:	        Female, Male
       %li
         Helpful links:
-        !=link_to "Stream API Documentation", "http://wiki.developer.myspace.com/index.php?title=Real_Time_Stream_Functional_Overview"
+        - link_to "Stream API Documentation", "http://wiki.developer.myspace.com/index.php?title=Real_Time_Stream_Functional_Overview"
         &mdash;
-        !=link_to "MySpace API Announcement", "http://developer.myspace.com/Community/blogs/devteam/archive/2009/12/08/opening-the-flood-gates-and-unleashing-the-data.aspx"
+        - link_to "MySpace API Announcement", "http://developer.myspace.com/Community/blogs/devteam/archive/2009/12/08/opening-the-flood-gates-and-unleashing-the-data.aspx"
     %ul.help
-      %li query-object:	        person, band, comedian, filmmaker, group, friend_category, profile, file, photo, video, tv-episode, movie, video-podcast, audio, audio-podcast, song, bookmark, review, article, blog-entry, note, bulletin, forum_topic, event, bandshow, birthday, contest, application, mobileapplication, poll, name, photo-album, music-album, playlist, place, comment, userpage, channelpage, socialwebsite, emailaddress, website
-      %li query-verb:	        post, share, save, play, make-friend, join, favorite, follow, tag, accepttag, update, install, show, use, rsvp-yes, rsvp-no, rsvp-maybe, register, delete
+      %li query-object:	        application, article, audio, audio-podcast, band, bandshow, birthday, blog-entry, bookmark, bulletin, channelpage, comedian, comment, contest, emailaddress, event, file, filmmaker, forum_topic, friend_category, group, mobileapplication, movie, music-album, name, note, person, photo, photo-album, place, playlist, poll, profile, review, socialwebsite, song, tv-episode, userpage, video, video-podcast, website
+      %li query-verb:	        accepttag, delete, favorite, follow, install, join, make-friend, play, post, register, rsvp-maybe, rsvp-no, rsvp-yes, save, share, show, tag, update, use
       %li query-source:	        Web, Mobile, TwitterSync, for applications, an application is specified as follows: "applicationId.123456" where 123456 is the application ID
       
   %dt  Endpoint
