@@ -7,6 +7,7 @@ FloodMonkey helps manage subscriptions to the MySpace Flood, their real-time act
 * "Stream Subscription API":http://wiki.developer.myspace.com/index.php?title=Stream_Subscription_API
 * "Subscription Query Spec":http://wiki.developer.myspace.com/index.php?title=Stream_Subscription_Query_Spec
 * "Stream Subscription Spec":http://wiki.developer.myspace.com/index.php?title=Stream_Subscription_Spec
+* "MySpace Blog Post announcing the API launch":http://developer.myspace.com/Community/blogs/devteam/archive/2009/12/08/opening-the-flood-gates-and-unleashing-the-data.aspx
 
 FloodMonkey is designed for people looking to capture firehose-level (100%) data streams.  We use it to haul in 25GB+ of raw data every day with a single small EC2 instance and room to spare.
 
@@ -40,6 +41,7 @@ h4. Caveats
 
 * You actually don't need to authenticate as a user to myspace, just as an app.  There are facilities for three-legged oauth in the app - making stream API requests on behalf of a user - but they're not hooked to anything interesting at the moment.
 * The app streams directly to disk, it doesn't parse the received data or load it into a database.  This is best done by separate worker processes.
+* Make sure you use the vendor'ed OAuth gem, or pull from the current (12/2009) http://github.com/mojodna/oauth edge version. MySpace is overly finicky about the structure of OAuth requests, insisting that the query params land in sort order. The latest versions of the gem tolerate this peccadillo.
 
 h2. Credits
 
@@ -76,8 +78,12 @@ Add the deploy user
     sudo passwd deploy
 </pre>
 
+Deploy
+
 <pre>
     cap deploy:setup
-    cap deploy:cold
     scp -p config/settings.yml remotehost.com:/var/www/cartilage/shared/system/settings.yml
+    cap deploy:cold
 </pre>
+
+

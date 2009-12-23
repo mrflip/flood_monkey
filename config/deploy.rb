@@ -4,7 +4,7 @@ require 'monk/glue'
 RACK_ENV = 'production' unless defined?(RACK_ENV)
 
 set :application,  Monk::Glue.settings(:app_name)
-set :domain,       's2.infinitemonkeys.info' # Monk::Glue.settings(:domain)
+set :domain,       Monk::Glue.settings(:domain)
 set :repository,   Monk::Glue.settings(:repository)
 set :scm,          :git
 set :deploy_via,   :remote_cache
