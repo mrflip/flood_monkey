@@ -34,7 +34,7 @@ class Main < Monk::Glue
 
   # use Rack::Session::Cookie,
   #   :key          => 'rack.session',
-  #   :domain       => 'infinitemonkeys.info',
+  #   :domain       => settings(:domain),
   #   :path         => '/',
   #   :expire_after => 2592000,
   #   :secret       => settings(:session_secret)
