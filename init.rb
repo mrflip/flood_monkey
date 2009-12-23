@@ -9,9 +9,11 @@ require "monk/glue"
 require "json"
 require 'sinatra'
 require 'haml'
+require 'fileutils'
 require 'extlib'
 require 'restclient'
 require 'oauth'
+require 'rack-flash'
 # require 'dm-core'
 # require 'dm-validations'
 # require 'dm-timestamps'
@@ -27,13 +29,15 @@ class Main < Monk::Glue
   configure :development, :test do
     set :static,           true
   end
+
   # use Rack::Session::Cookie,
   #   :key          => 'rack.session',
-  #   :domain       => settings(:domain),
+  #   :domain       => 'infinitemonkeys.info',
   #   :path         => '/',
   #   :expire_after => 2592000,
   #   :secret       => settings(:session_secret)
-  enable :sessions
+  set :sessions, true
+  use Rack::Flash, :accessorize => [:success, :notice, :error]
 end
 
 # Load all application files.
