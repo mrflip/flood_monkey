@@ -6,7 +6,7 @@ FloodMonkey helps manage subscriptions to the MySpace Flood, their real-time act
 * "Real-time Stream API":http://wiki.developer.myspace.com/index.php?title=Category:Real_Time_Stream
 * "Stream Subscription API":http://wiki.developer.myspace.com/index.php?title=Stream_Subscription_API
 * "Subscription Query Spec":http://wiki.developer.myspace.com/index.php?title=Stream_Subscription_Query_Spec
-* "Stream Subscription Spec"http://wiki.developer.myspace.com/index.php?title=Stream_Subscription_Spec
+* "Stream Subscription Spec":http://wiki.developer.myspace.com/index.php?title=Stream_Subscription_Spec
 
 FloodMonkey is designed for people looking to capture firehose-level (100%) data streams.  We use it to haul in 25GB+ of raw data every day with a single small EC2 instance and room to spare.
 
@@ -22,10 +22,12 @@ h2. How to
 
 * Create a MySpaceId app. Take it out of sandbox mode.
 * Click on the page for the app and set up the OAuth urls. Be careful about the validation URL: it has to omit the http://, any third-level domain in the host, and any trailing "/" or query params.
+
 <pre>
    External URL                  http://www.domain.com/endpoint/myspace
    External Callback Validation: domain.com/endpoint/myspace/cb
 </pre>
+
 * While you're there, copy out the consumer key and secret. Paste them into the settings.yml
 * create a directory on a large local disk and replace the 'work' symlink to point to it.  A full stream will fill 25GB a day or so, so be prepared.
 
@@ -41,7 +43,9 @@ h4. Caveats
 
 h2. Credits
 
+* Big ups to the very patient Jamie and Joel at MySpace for including us in the beta program, and working through a series of mysterious bugs.
 * The frontend app is based on Monk / Cartilage, a skeleton for building Sinatra apps.
+* The OAuth gem makes this thing work
 
 h2. Setup
 
@@ -72,6 +76,8 @@ Add the deploy user
     sudo passwd deploy
 </pre>
 
-cap deploy:setup
-cap deploy:cold
-scp -p config/settings.yml remotehost.com:/var/www/cartilage/shared/system/settings.yml
+<pre>
+    cap deploy:setup
+    cap deploy:cold
+    scp -p config/settings.yml remotehost.com:/var/www/cartilage/shared/system/settings.yml
+</pre>
