@@ -10,6 +10,23 @@ FloodMonkey is designed for people looking to capture firehose-level (100%) data
 
 FloodMonkey is *not* designed for anything real-time. The endpoint streams everything to disk for bulk processing later -- we use "wukong":http://github.com/mrflip/wukong and "wuclan.":http://github.com/mrflip/wuclan
 
+h2. How to
+
+* Copy config/settings.example.yml to config/settings.yml and enter your info everywhere you see "CHANGEME"
+
+* Create a MySpaceId app. Take it out of sandbox mode.
+* Click on the page for the app and set up the OAuth urls. Be careful about the validation URL: it has to omit the http://, any third-level domain in the host, and any trailing "/" or query params.
+<pre>
+   External URL                  http://www.domain.com/endpoint/myspace
+   External Callback Validation: domain.com/endpoint/myspace/cb
+</pre>
+* While you're there, copy out the consumer key and secret. Paste them into the settings.yml
+* create a directory on a large local disk and replace the 'work' symlink to point to it.  A full stream will fill 25GB a day or so, so be prepared.
+
+* While developing, I run @shotgun --server=thin --host=0.0.0.0 --port=8080 config.ru@
+* For production, I use the nginx+unicorn setup contained in config/production.  You can start unicorn by hand with @unicorn -E production -c unicorn-conf.rb config.ru@ and then manipulate it with "signals.":http://unicorn.bogomips.org/SIGNALS.html
+
+
 h2. Credits
 
 * The frontend app is based on Monk / Cartilage, a skeleton for building Sinatra apps.
