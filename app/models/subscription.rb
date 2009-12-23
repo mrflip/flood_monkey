@@ -14,14 +14,14 @@ Subscription.class_eval do
   DEFAULT_PARAMS = {
     :query       => {
       # :location => {:lat => 36.1, :lon => -115.1, :radius => 30},
-      :object   => "Music"
+      :object   => "Note"
     },
     :rate        => 1,
     :batch_size  => 1000,
     :type        => "All",
     :meta_data   => "UserInfo,UserSubscribers,ApplicationData",
     :format      => "application/json",
-    :endpoint    => Main.settings(:myspace)[:pub_callback_url]+'/generic',
+    :endpoint    => MYSPACE_PUB_BASE+'/generic',
     :status      => 'Active',
     :remove_list => nil,
   }
@@ -29,13 +29,16 @@ Subscription.class_eval do
   attr_accessor :slug
   cattr_accessor :accessible_attributes
   self.accessible_attributes = [
-    :rate, :batch_size, :type, :meta_data, :format, :endpoint, :status,
-    :query, :query_as_json, :slug
-  ]
+    :rate, :batch_size, :type, :meta_data, :format,
+    :endpoint, :status, :query, :query_as_json, :slug ]
 
   def initialize *args
     super *args
     self.fix!
+  end
+
+  def titleize
+    "Subscription #{id}: #{slug}"
   end
 
   def self.from_hash hsh={}
@@ -56,7 +59,7 @@ Subscription.class_eval do
     # hsh[:batch_size] = hsh[:batch_size].to_i     unless hsh[:batch_size].blank?
     # hsh[:rate]       = hsh[:rate].to_i           unless hsh[:rate].blank?
     # hsh[:meta_data]  = hsh[:meta_data].join(",") if  (! hsh[:meta_data].blank?) && hsh[:meta_data].respond_to?(:join)
-    hsh = DEFAULT_PARAMS.deep_merge hsh
+    hsh = DEFAULT_PARAMS.merge hsh
   end
 
   def fix!
@@ -84,7 +87,7 @@ Subscription.class_eval do
   end
   def slug= _slug
     @slug = _slug.gsub(/\W+/, '')
-    self.endpoint = Main.settings(:myspace)[:pub_callback_url] + '/' + @slug unless @slug.blank?
+    self.endpoint = MYSPACE_PUB_BASE + '/' + @slug unless @slug.blank?
   end
 
   def to_myspace_json
@@ -162,7 +165,7 @@ private
       when 200, 201
         raw_hsh = JSON.load(result.body) if block
         yield(result, raw_hsh)           if block
-        messages[:success] = %Q{Subscription #{http_method} successful : #{result.message} (#{result.code})} # unless http_method == :get
+        messages[:success] = %Q{Subscription #{http_method} successful : #{result.message} (#{result.code})} unless http_method == :get
       when 400 # bad request
         messages[:error] = %Q{Can\'t #{http_method} subscription: #{result['x-opensocial-error']}}
       when 404 # not found
@@ -177,5 +180,4 @@ private
     end
     [result, raw_hsh, messages]
   end
-
 end
