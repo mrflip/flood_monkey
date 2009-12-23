@@ -1,11 +1,10 @@
 class Main
   # ===========================================================================
   #
-  # Before
+  # Before Filters
   #
   before do
     @title = request.path_info
-    session[:flash] ||= {}
+    protected! if (request.path_info =~ %r{\A#{MYSPACE_URL_BASE}/subscriptions})
   end
-
 end
