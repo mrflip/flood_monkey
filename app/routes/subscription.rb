@@ -74,7 +74,7 @@ class Main
     obj_type = params[:obj_type].to_s
     create_subscription(
       :query    => { :object => obj_type.camelize },
-      :endpoint => MYSPACE_PUB_BASE+"/#{obj_type.underscore}"
+      :endpoint => Main.myspace_pub_callback(obj_type.underscore)
       )
   end
 

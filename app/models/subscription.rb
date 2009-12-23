@@ -21,7 +21,7 @@ Subscription.class_eval do
     :type        => "All",
     :meta_data   => "UserInfo,UserSubscribers,ApplicationData",
     :format      => "application/json",
-    :endpoint    => MYSPACE_PUB_BASE+'/generic',
+    :endpoint    => nil,
     :status      => 'Active',
     :remove_list => nil,
   }
@@ -63,6 +63,7 @@ Subscription.class_eval do
   end
 
   def fix!
+    self.endpoint ||= Main.myspace_pub_callback(@slug || '/generic')
     self.batch_size = batch_size.to_i     unless self.batch_size.blank?
     self.rate       = rate.to_i           unless self.rate.blank?
     self.meta_data  = meta_data.join(",") if  (! self.meta_data.blank?) && meta_data.respond_to?(:join)
@@ -87,7 +88,7 @@ Subscription.class_eval do
   end
   def slug= _slug
     @slug = _slug.gsub(/\W+/, '')
-    self.endpoint = MYSPACE_PUB_BASE + '/' + @slug unless @slug.blank?
+    self.endpoint = Main.myspace_pub_callback(@slug) unless @slug.blank?
   end
 
   def to_myspace_json

@@ -7,7 +7,7 @@
     .inline.help        Name for this stream - is appended to the callback url
   - labeled_field       subscription, :rate do
     .inputbox
-      - collection_select subscription, :rate, (1..100).to_a
+      - collection_select subscription, :rate, [1, 2, 3, 4, 5, 8, 10, 15, 20, 30, 40, 50, 75, 100]
     .inline.help        Percentage of stream sampled
     
   - labeled_field       subscription, :batch_size do

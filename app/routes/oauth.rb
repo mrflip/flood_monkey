@@ -21,7 +21,7 @@ class Main
     @request_token = ::OAuth::RequestToken.new(consumer, session[:request_token], session[:request_token_secret])
     @access_token  = @request_token.get_access_token settings(:myspace)[:oauth_setup]
     save_access_token_in_session
-    flash.now[:success] "Welcome!"
+    flash.now[:success] = "Welcome!"
     haml :root
   end
 
