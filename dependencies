@@ -1,6 +1,7 @@
 dependencies 0.0.7 git://github.com/djanowski/dependencies.git
 rack 1.0.1 git://github.com/rack/rack.git
 rack-test 0.5.3 (test) git://github.com/brynary/rack-test.git
+rack-flash git://github.com/nakajima/rack-flash.git
 sinatra 0.9.4 git://github.com/sinatra/sinatra.git
 haml 2.2.16 git://github.com/nex3/haml.git
 extlib 0.9.14 git://github.com/datamapper/extlib.git
@@ -8,7 +9,6 @@ oauth 0.3.6 git://github.com/mrflip/oauth.git
 rest-client 1.0.4 git://github.com/adamwiggins/rest-client.git
 monk-glue 0.0.1 git://github.com/monkrb/glue.git
 json 1.2.0 git://github.com/genki/json.git
-capistrano (development) git://github.com/mrflip/oauth.git
 unicorn (production) git://git.bogomips.org/unicorn.git
 god (production) git://github.com/mojombo/god.git
 godhead (production) git://github.com/mrflip/oauth.git
