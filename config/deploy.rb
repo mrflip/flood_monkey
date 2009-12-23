@@ -4,7 +4,7 @@ require 'monk/glue'
 RACK_ENV = 'production' unless defined?(RACK_ENV)
 
 set :application,  Monk::Glue.settings(:app_name)
-set :domain,       Monk::Glue.settings(:domain)
+set :domain,       's2.infinitemonkeys.info' # Monk::Glue.settings(:domain)
 set :repository,   Monk::Glue.settings(:repository)
 set :scm,          :git
 set :deploy_via,   :remote_cache
@@ -38,7 +38,7 @@ namespace :deploy do
   end
 
   task :after_setup do
-    run "sudo gem install rack rack-test sinatra haml extlib monk-glue json unicorn god godhead"
+    run "sudo gem install dependencies rack rack-test rack-flash sinatra haml extlib oauth rest-client monk-glue json unicorn god godhead"
   end
 
   # This will make sure that Capistrano doesn't try to run rake:migrate (this is not a Rails project!)
@@ -47,7 +47,6 @@ namespace :deploy do
     deploy.start
   end
 end
-
 
 # cap deploy               # Deploys your project.
 # cap deploy:check         # Test deployment dependencies.
