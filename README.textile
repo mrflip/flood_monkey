@@ -2,6 +2,12 @@ h1. FloodMonkey - Supervise your stream
 
 FloodMonkey helps manage subscriptions to the MySpace Flood, their real-time activity stream API.
 
+* "Real-time Stream: Functional Overview":http://wiki.developer.myspace.com/index.php?title=Real_Time_Stream_Functional_Overview
+* "Real-time Stream API":http://wiki.developer.myspace.com/index.php?title=Category:Real_Time_Stream
+* "Stream Subscription API":http://wiki.developer.myspace.com/index.php?title=Stream_Subscription_API
+* "Subscription Query Spec":http://wiki.developer.myspace.com/index.php?title=Stream_Subscription_Query_Spec
+* "Stream Subscription Spec"http://wiki.developer.myspace.com/index.php?title=Stream_Subscription_Spec
+
 FloodMonkey is designed for people looking to capture firehose-level (100%) data streams.  We use it to haul in 25GB+ of raw data every day with a single small EC2 instance and room to spare.
 
 * A simple Sinatra frontend to manage and monitor subscriptions
@@ -23,9 +29,15 @@ h2. How to
 * While you're there, copy out the consumer key and secret. Paste them into the settings.yml
 * create a directory on a large local disk and replace the 'work' symlink to point to it.  A full stream will fill 25GB a day or so, so be prepared.
 
-* While developing, I run @shotgun --server=thin --host=0.0.0.0 --port=8080 config.ru@
+* While developing, I run @shotgun --server=thin --host=0.0.0.0 --port=8080 config.ru@ (you'll have to run on port 80 or use unicorn in development mode to use the publishing callbacks and some oauth calls).
 * For production, I use the nginx+unicorn setup contained in config/production.  You can start unicorn by hand with @unicorn -E production -c unicorn-conf.rb config.ru@ and then manipulate it with "signals.":http://unicorn.bogomips.org/SIGNALS.html
 
+* try clicking on the 'test post' link. It should make a bogus post (stored in a file labelled 'test') that you can watch from each end.
+
+h4. Caveats
+
+* You actually don't need to authenticate as a user to myspace, just as an app.  There are facilities for three-legged oauth in the app - making stream API requests on behalf of a user - but they're not hooked to anything interesting at the moment.
+* The app streams directly to disk, it doesn't parse the received data or load it into a database.  This is best done by separate worker processes.
 
 h2. Credits
 
