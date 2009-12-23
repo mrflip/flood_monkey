@@ -1,7 +1,7 @@
 class Main
-  # helpers do
+  helpers do
 
-    # From http://github.com/twilson63/sinatra-formhelpers/raw/master/lib/sinatra/formhelpers.rb
+    # Another take on http://github.com/twilson63/sinatra-formhelpers/raw/master/lib/sinatra/formhelpers.rb
     #
     # FormHelpers are a suite of helper methods
     # built to make building forms in Sinatra
@@ -15,10 +15,6 @@ class Main
     # area :person, :notes
     #
     # etc.
-
-    # def link(content, href, options={})
-    #   tag :a, content, options.merge(:href => href)
-    # end
 
     def dl_dt_text_field obj, field, options={ }, &block
       haml_tag(:dt){ label(obj, field) }
@@ -87,30 +83,29 @@ class Main
       haml_tag :select, { :name => form_obj_name(obj, field), :id => form_obj_id(obj, field) } do
         collection_texts_and_values(collection, value_method, text_method) do |value, text|
           haml_concat h([options, is_selected(obj, field, value), obj.send(field), obj].inspect)
-          # text = member.send(text_method)
           opt_options = is_selected(obj, field, value)
-          # opt_options
           haml_tag :option, h(text), opt_options.merge(:value => h(value))
         end
       end
     end
 
-  private
+    # def image_tag(src, options={})
+    #   haml_tag :img, options.merge(:src => src)
+    # end
+    #
+    #
+    # def radio(obj, field, value, options={})
+    #   #content = @params[obj] && @params[obj][field.to_s] == value ? "true" : ""
+    #   # , :checked => content
+    #   tag :input, "", options.merge(:type => "radio", :id => "#{obj}_#{field}_#{value}", :name => "#{obj}[#{field}]", :value => value)
+    # end
+    #
+    # def hidden(obj, field="", options={})
+    #   content = @params[obj] && @params[obj][field.to_s] == value ? "true" : ""
+    #   single_tag :input, options.merge(:type => "hidden", :id => "#{obj}_#{field}", :name => "#{obj}[#{field}]")
+    # end
 
-    def collection_texts_and_values collection, value_method=nil, text_method=nil, &block
-      return collection            if String === collection
-      collection = collection.to_a if Hash   === collection
-      if value_method
-        collection.each do |row|
-          yield row.send(value_method), row.send(text_method)
-        end
-      else
-        collection.each do |value, text|
-          text ||= value
-          yield value, text
-        end
-      end
-    end
+  private
 
     def form_obj_id obj, field
       name = case obj
@@ -132,45 +127,20 @@ class Main
       obj.respond_to?(field) ? obj.send(field).to_s : ""
     end
 
-    # def image_tag(src, options={})
-    #   haml_tag :img, options.merge(:src => src)
-    # end
-    #
-    #
-    # def radio(obj, field, value, options={})
-    #   #content = @params[obj] && @params[obj][field.to_s] == value ? "true" : ""
-    #   # , :checked => content
-    #   tag :input, "", options.merge(:type => "radio", :id => "#{obj}_#{field}_#{value}", :name => "#{obj}[#{field}]", :value => value)
-    # end
-    #
-    # def select(obj, field, items, options={})
-    #   content = ""
-    #   items.each do |i|
-    #     content = content + tag(:option, i, { :value => i })
-    #   end
-    #   tag :select, content, options
-    # end
-    #
-    # def hidden(obj, field="", options={})
-    #   content = @params[obj] && @params[obj][field.to_s] == value ? "true" : ""
-    #   single_tag :input, options.merge(:type => "hidden", :id => "#{obj}_#{field}", :name => "#{obj}[#{field}]")
-    # end
-    #
-    # # standard open and close tags
-    # # EX : tag :h1, "shizam", :title => "shizam"
-    # # => <h1 title="shizam">shizam</h1>
-    # def tag(name,content,options={})
-    #   with_opts = "<#{name.to_s} #{options.to_html_attrs}>#{content}</#{name}>"
-    #   no_opts = "<#{name.to_s}>#{content}</#{name}>"
-    #   haml_tag( options.blank? ? no_opts : with_opts )
-    # end
-    #
-    # # standard single closing tags
-    # # single_tag :img, :src => "images/google.jpg"
-    # # => <img src="images/google.jpg" />
-    # def single_tag(name,options={})
-    #   haml_concat "<#{name.to_s} #{options.to_html_attrs} />"
-    # end
+    def collection_texts_and_values collection, value_method=nil, text_method=nil, &block
+      return collection            if String === collection
+      collection = collection.to_a if Hash   === collection
+      if value_method
+        collection.each do |row|
+          yield row.send(value_method), row.send(text_method)
+        end
+      else
+        collection.each do |value, text|
+          text ||= value
+          yield value, text
+        end
+      end
+    end
 
-  # end
+  end
 end
