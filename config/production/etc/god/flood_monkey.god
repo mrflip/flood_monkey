@@ -7,9 +7,8 @@ FLOOD_MONKEY_DEPLOY_DIR = '/var/www/flood_monkey'
 #
 group_options = { :monitor_group => :flood_monkey, }
 
-# Use NginxRunnerRecipe on OSX
-Godhead::NginxRecipe.create group_options.merge({ })
-# Godhead::NginxRunnerRecipe.create group_options.merge({ })
+Godhead::NginxRecipe.create group_options.merge({ })         # Use on systems with /etc/init.d
+# Godhead::NginxRunnerRecipe.create group_options.merge({ }) # Use on OSX
 
 Godhead::UnicornRecipe.create     group_options.merge({
     :root_dir => FLOOD_MONKEY_DEPLOY_DIR+'/current',
