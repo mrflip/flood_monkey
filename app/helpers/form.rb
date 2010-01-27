@@ -28,6 +28,16 @@ class Main
       end
     end
 
+    # makes an anchor tag.
+    def link_to text, path, options={}
+      haml_tag(:a, h(text), options.reverse_merge(:href => h(path)))
+    end
+
+    def image_tag(src, alt=nil, options={})
+      alt ||= File.basename(src).gsub(/.+$/, '')
+      haml_tag :img, options.merge(:src => src, :alt => alt)
+    end
+
     def labeled_field obj, field, options={ }, &block
       haml_tag(:dt){ label(obj, field) }
       haml_tag(:dd) do
@@ -89,10 +99,6 @@ class Main
       end
     end
 
-    # def image_tag(src, options={})
-    #   haml_tag :img, options.merge(:src => src)
-    # end
-    #
     #
     # def radio(obj, field, value, options={})
     #   #content = @params[obj] && @params[obj][field.to_s] == value ? "true" : ""
