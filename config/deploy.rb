@@ -10,8 +10,9 @@ set :scm,          :git
 set :deploy_via,   :remote_cache
 
 set :user,         "deploy"
-set :runner,       user
-set :admin_runner, runner
+# set :runner,       user
+# set :admin_runner, runner
+set :web_user,     'www-data'
 set :deploy_to,    "/var/www/#{application}" # path to app on remote machine
 role :app,         domain
 role :web,         domain
@@ -34,6 +35,7 @@ namespace :deploy do
   end
 
   task :after_symlink do
+    sudo "chown -R #{web_user} #{deploy_to}/shared/log #{deploy_to}/shared/tmp #{deploy_to}/shared/system"
     run "ln -nfs #{deploy_to}/shared/system/settings.yml #{deploy_to}/current/config/settings.yml"
   end
 

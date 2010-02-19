@@ -23,11 +23,6 @@ class Main
       '<pre>'+h(stuff.inspect.gsub(/, /, ",\n\t"))+'</pre>'
     end
 
-    # makes an anchor tag.
-    def link_to text, path, options={}
-      haml_tag(:a, h(text), options.reverse_merge(:href => h(path)))
-    end
-
     # prevents browser caching for an asset using a dummy parameter (the url
     # changes on each call)
     def nocache url

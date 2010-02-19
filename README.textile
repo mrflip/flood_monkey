@@ -74,8 +74,8 @@ Nginx
 Add the deploy user
 
 <pre>
-    sudo useradd -G admin,sudo deploy
-    sudo passwd deploy
+    sudo adduser deploy
+    sudo usermod -a  -G admin,sudo deploy
 </pre>
 
 Deploy
