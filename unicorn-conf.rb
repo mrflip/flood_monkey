@@ -23,7 +23,7 @@ pid                 app_dir+'/shared/tmp/unicorn.pid'
 
 after_fork do |server, worker|
   # per-process listener ports for debugging/admin/migrations
-  addr = "127.0.0.1:#{9000 + worker.nr}"
+  addr = "localhost:#{9000 + worker.nr}"
   # keep trying to connect to port, wait 5s in between (an older daemon might
   # still be quitting and won the port).
   server.listen(addr, :tries => -1, :delay => 5, :backlog => 64)  # , :tcp_nopush => true
