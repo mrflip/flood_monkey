@@ -1,0 +1,5 @@
+#flash
+  - [:success, :notice, :error].each do |flash_type|
+    - if flash.has?(flash_type)
+      %div{ :class => flash_type }
+        = flash[flash_type]

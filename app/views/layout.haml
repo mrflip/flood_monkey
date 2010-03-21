@@ -9,12 +9,8 @@
 
   %body
     #container
-      != partial :_topbar
-      #flash
-        - [:success, :notice, :error].each do |flash_type|
-          - if flash.has?(flash_type)
-            %div{ :class => flash_type }
-              = flash[flash_type]
+      != partial :_topbar unless @skip_topbar
+      != partial :_flash
       %br.clear
       
       != yield
