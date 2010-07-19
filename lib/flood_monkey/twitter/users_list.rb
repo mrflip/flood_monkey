@@ -90,8 +90,9 @@ class UsersLoader < Wukong::Streamer::StructStreamer
   def reflect_user nbrs
     maybes = Set.new
     nbrs.each do |u|
-      return u if (u.followers_count >= 95) && ((u.followers_count+5) % 100 < 10)
-      maybes << u if u.followers_count <= 1000
+      next if u.followers_count > 500
+      return u if (u.followers_count >= 90) && (u.followers_count % 100 > 90)
+      maybes << u
     end
     maybes.sort_by{|u| -u.followers_count }.first
   end
@@ -100,14 +101,17 @@ class UsersLoader < Wukong::Streamer::StructStreamer
     3.times do |iter|
       offset = iter*10
       batch = redis.zrange('u:sc_sn', offset+0, offset+9)
-      friends_resp = twitter.friends(:screen_name => 'infochimps', :count => 100, :cursor => -1)
+      friends_resp = twitter.friends(:screen_name => batch.first, :count => 100, :cursor => -1)
       friends = friends_resp['users']
-      p reflect_user(friends)
+      refl_u  = reflect_user(friends)
+      refl_uu = TwitterUser.from_hash(refl_u) ; refl_uu.scraped_at ||= Time.now ; refl_uu.fix!
+      if refl_u.followers_count > 90 then p refl_uu.to_flat
+      end
       p friends_resp.values_of("previous_cursor", "previous_cursor_str", "next_cursor", "next_cursor_str")
       fc = friends.map do |fr|
         fr.followers_count.to_i rescue nil
       end.compact
-      puts fc.sort.join("\t")
+      puts fc.join("\t")
       # puts friends.first.to_hash.inspect
       uu =  TwitterUser.from_hash(friends.first.merge('scraped_at' => Time.now)) ; uu.fix!
       puts uu.to_flat.join("\t")
